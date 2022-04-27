@@ -27,15 +27,15 @@ class CategoryFragment : Fragment() {
 
         val vm = ViewModelProvider(this).get(CategoriesVm::class.java)
 
-        vm.getCtgr().observe(viewLifecycleOwner, {
+        vm.getCtgr().observe(viewLifecycleOwner) {
 //            Log.e("onCreateView", "onCreateView: ${.size} ", )
-val array = it.body()!!.drinks
+            val array = it.body()!!.drinks
             viewPager2.adapter = ViewPagerAdapter(array)
             val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
             TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
                 tab.text = array[position].strCategory
             }.attach()
-        })
+        }
 
         return view
     }
