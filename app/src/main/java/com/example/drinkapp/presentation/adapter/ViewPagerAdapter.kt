@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.drinkapp.R
-import com.example.drinkapp.domain.model.Drink
+import com.example.drinkapp.domain.model.CategoriesNameModel
 
-class ViewPagerAdapter(val array : List<Drink>) : RecyclerView.Adapter<PagerVH>() {
+class ViewPagerAdapter(val array : List<CategoriesNameModel>) : RecyclerView.Adapter<PagerVH>() {
 
     private val images = intArrayOf(
         R.drawable.ic_category,

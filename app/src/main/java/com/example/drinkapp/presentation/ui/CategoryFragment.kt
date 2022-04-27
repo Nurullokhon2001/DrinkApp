@@ -29,7 +29,7 @@ class CategoryFragment : Fragment() {
 
         vm.getCtgr().observe(viewLifecycleOwner) {
 //            Log.e("onCreateView", "onCreateView: ${.size} ", )
-            val array = it.body()!!.drinks
+            val array = it.body()!!.categoriesNameModels
             viewPager2.adapter = ViewPagerAdapter(array)
             val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
             TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
