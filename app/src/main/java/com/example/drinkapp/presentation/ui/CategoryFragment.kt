@@ -1,17 +1,14 @@
-package com.example.drinkapp.view
+package com.example.drinkapp.presentation.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.drinkapp.R
-import com.example.drinkapp.model.CategoriesModel
-import com.example.drinkapp.vm.CategoriesVm
+import com.example.drinkapp.presentation.vm.CategoriesVm
 import com.example.myapplication.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator

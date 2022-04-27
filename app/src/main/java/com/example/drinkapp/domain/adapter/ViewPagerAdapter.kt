@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.drinkapp.R
-import com.example.drinkapp.model.Drink
+import com.example.drinkapp.domain.model.Drink
 
 class ViewPagerAdapter(val array : List<Drink>) : RecyclerView.Adapter<PagerVH>() {
 

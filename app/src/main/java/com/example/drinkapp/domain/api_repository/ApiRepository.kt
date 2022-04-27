@@ -1,8 +1,7 @@
-package com.example.drinkapp.repository
+package com.example.drinkapp.domain.api_repository
 
-import android.util.Log
-import com.example.drinkapp.model.CategoriesModel
-import com.example.drinkapp.retrofit.RetrofitInstance
+import com.example.drinkapp.domain.model.CategoriesModel
+import com.example.drinkapp.domain.retrofit.RetrofitInstance
 import retrofit2.Response
 
 class ApiRepository {

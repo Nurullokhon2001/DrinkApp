@@ -1,5 +1,6 @@
-package com.example.drinkapp.retrofit
+package com.example.drinkapp.domain.retrofit
 
+import com.example.drinkapp.data.ApiInterface
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

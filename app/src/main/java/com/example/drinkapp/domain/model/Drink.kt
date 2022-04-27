@@ -1,4 +1,4 @@
-package com.example.drinkapp.model
+package com.example.drinkapp.domain.model
 
 
 import com.google.gson.annotations.SerializedName

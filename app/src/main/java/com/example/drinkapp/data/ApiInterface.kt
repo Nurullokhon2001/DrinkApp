@@ -1,6 +1,6 @@
-package com.example.drinkapp.retrofit
+package com.example.drinkapp.data
 
-import com.example.drinkapp.model.CategoriesModel
+import com.example.drinkapp.domain.model.CategoriesModel
 import retrofit2.Response
 import retrofit2.http.GET
 
