@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.drinkapp.R
 import com.example.drinkapp.domain.model.CategoriesModel
+import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.presentation.vm.CategoriesVm
 import com.example.myapplication.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
@@ -18,6 +19,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class CategoryFragment : Fragment() {
 
     lateinit var ctgrArary: CategoriesModel
+    lateinit var adapter : ViewPagerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +34,8 @@ class CategoryFragment : Fragment() {
 
         vm.getCtgr().observe(viewLifecycleOwner) {
             ctgrArary = it.body()!!
-            viewPager2.adapter = ViewPagerAdapter(ctgrArary.categoriesNameModels)
+            adapter = ViewPagerAdapter(ctgrArary.categoriesNameModels,requireContext())
+            viewPager2.adapter = adapter
 
             TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
                 tab.text = ctgrArary.categoriesNameModels[position].strCategory
@@ -47,6 +50,7 @@ class CategoryFragment : Fragment() {
                     vm.getDrinks(ctgrArary.categoriesNameModels[tab.position].strCategory)
                         .observe(viewLifecycleOwner) {
                             Log.e("onCreateView", "onCreateView: ${it.body()!!.drinks.size}")
+                            adapter.setData(it.body()!!.drinks as ArrayList<Drink>)
                         }
                 }
             }
