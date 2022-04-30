@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.drinkapp.R
@@ -19,7 +20,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class CategoryFragment : Fragment() {
 
     lateinit var ctgrArary: CategoriesModel
-    lateinit var adapter : ViewPagerAdapter
+    lateinit var adapter: ViewPagerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,11 +31,11 @@ class CategoryFragment : Fragment() {
         val viewPager2: ViewPager2 = view.findViewById(R.id.viewpager)
         val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
         val vm = ViewModelProvider(this).get(CategoriesVm::class.java)
-
+        val progress = view.findViewById<ProgressBar>(R.id.progress)
 
         vm.getCtgr().observe(viewLifecycleOwner) {
             ctgrArary = it.body()!!
-            adapter = ViewPagerAdapter(ctgrArary.categoriesNameModels,requireContext())
+            adapter = ViewPagerAdapter(ctgrArary.categoriesNameModels, requireContext())
             viewPager2.adapter = adapter
 
             TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
@@ -42,6 +43,16 @@ class CategoryFragment : Fragment() {
 
 
             }.attach()
+        }
+
+        vm.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                viewPager2.visibility = View.GONE
+                progress.visibility = View.VISIBLE
+            } else {
+                viewPager2.visibility = View.VISIBLE
+                progress.visibility = View.GONE
+            }
         }
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
