@@ -27,13 +27,13 @@ class HistoryFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_history, container, false)
         rv = view.findViewById(R.id.rv)
         val vm = ViewModelProvider(this).get(CategoriesVm::class.java)
-        val adapter = DrinkAdapter(requireContext())
-        rv.adapter = adapter
+//        val adapter = DrinkAdapter(requireContext())
+//        rv.adapter = adapter
         rv.layoutManager = GridLayoutManager(requireContext(),2)
         vm.getDrinks("COCKTAIL")
             .observe(viewLifecycleOwner) {
                 Log.e("onCreateView", "onCreateView: ${it.body()!!.drinks.size}")
-                adapter.setData(it.body()!!.drinks as ArrayList<Drink>)
+//                adapter.setData(it.body()!!.drinks as ArrayList<Drink>)
             }
         return view
     }

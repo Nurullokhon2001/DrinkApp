@@ -1,31 +1,19 @@
-package com.example.myapplication
+package com.example.drinkapp.presentation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.drinkapp.R
 import com.example.drinkapp.domain.model.CategoriesNameModel
 import com.example.drinkapp.domain.model.Drink
-import com.example.drinkapp.presentation.adapter.DrinkAdapter
 
-class ViewPagerAdapter(val array: List<CategoriesNameModel>, val contextt: Context) :
+class ViewPagerAdapter(private val array: List<CategoriesNameModel>, context: Context, mItemClickListener: DrinkAdapter.DrinkOnclick) :
     RecyclerView.Adapter<PagerVH>() {
     private var array2: ArrayList<Drink> = ArrayList()
-    val adapter = DrinkAdapter(contextt)
-    private val images = arrayListOf<Drink>(
-        Drink("id", "name", "icon"),
-        Drink("id", "name", "icon"),
-        Drink("id", "name", "icon"),
-        Drink("id", "name", "icon"),
-        Drink("id", "name", "icon"),
-        Drink("id", "name", "icon"),
-        Drink("id", "name", "icon"),
-        Drink("id", "name", "icon"),
-    )
+    private val adapter = DrinkAdapter(context,mItemClickListener)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerVH =
         PagerVH(

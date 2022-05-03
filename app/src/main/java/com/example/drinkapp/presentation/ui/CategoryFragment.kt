@@ -7,13 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.drinkapp.R
 import com.example.drinkapp.domain.model.CategoriesModel
 import com.example.drinkapp.domain.model.Drink
+import com.example.drinkapp.presentation.adapter.DrinkAdapter
 import com.example.drinkapp.presentation.vm.CategoriesVm
-import com.example.myapplication.ViewPagerAdapter
+import com.example.drinkapp.presentation.adapter.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -33,9 +35,16 @@ class CategoryFragment : Fragment() {
         val vm = ViewModelProvider(this).get(CategoriesVm::class.java)
         val progress = view.findViewById<ProgressBar>(R.id.progress)
 
+        val click = object : DrinkAdapter.DrinkOnclick{
+            override fun clickItem(id: Int) {
+                Toast.makeText(requireContext(), "id = $id", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
         vm.getCtgr().observe(viewLifecycleOwner) {
             ctgrArary = it.body()!!
-            adapter = ViewPagerAdapter(ctgrArary.categoriesNameModels, requireContext())
+            adapter = ViewPagerAdapter(ctgrArary.categoriesNameModels, requireContext(),click)
             viewPager2.adapter = adapter
 
             TabLayoutMediator(tabLayout, viewPager2) { tab, position ->

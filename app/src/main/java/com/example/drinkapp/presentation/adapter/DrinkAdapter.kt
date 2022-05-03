@@ -11,15 +11,20 @@ import com.bumptech.glide.Glide
 import com.example.drinkapp.R
 import com.example.drinkapp.domain.model.Drink
 
-class DrinkAdapter(private val context: Context) :
+class DrinkAdapter(private val context: Context, private val mItemClickListener: DrinkOnclick) :
     RecyclerView.Adapter<DrinkAdapter.DrinkViewHolder>() {
     private var array: ArrayList<Drink> = ArrayList()
 
     class DrinkViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val image: ImageView = itemView.findViewById(R.id.iv_drink)
         val tvName: TextView = itemView.findViewById(R.id.name)
+    }
+
+    interface DrinkOnclick {
+        fun clickItem(id: Int)
 
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DrinkViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.drink_item, parent, false)
@@ -28,12 +33,16 @@ class DrinkAdapter(private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: DrinkViewHolder, position: Int) {
+
         Glide
             .with(context)
             .load(array[position].strDrinkThumb)
             .centerCrop()
             .into(holder.image)
         holder.tvName.text = array[position].strDrink
+        holder.itemView.setOnClickListener {
+            mItemClickListener.clickItem(array[position].idDrink.toInt())
+        }
     }
 
     override fun getItemCount() = array.size
