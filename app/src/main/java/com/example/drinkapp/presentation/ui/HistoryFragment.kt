@@ -31,10 +31,10 @@ class HistoryFragment : Fragment() {
 //        rv.adapter = adapter
         rv.layoutManager = GridLayoutManager(requireContext(),2)
         vm.getDrinks("COCKTAIL")
-            .observe(viewLifecycleOwner) {
-                Log.e("onCreateView", "onCreateView: ${it.body()!!.drinks.size}")
-//                adapter.setData(it.body()!!.drinks as ArrayList<Drink>)
-            }
+//            .observe(viewLifecycleOwner) {
+//                Log.e("onCreateView", "onCreateView: ${it.body()!!.drinks.size}")
+////                adapter.setData(it.body()!!.drinks as ArrayList<Drink>)
+//            }
         return view
     }
 

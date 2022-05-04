@@ -9,7 +9,11 @@
         android:id="@+id/category"
         android:name="com.example.drinkapp.presentation.ui.CategoryFragment"
         android:label="Category"
-        tools:layout="@layout/fragment_category" />
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_category_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/history"
         android:name="com.example.drinkapp.presentation.ui.HistoryFragment"
@@ -25,4 +29,9 @@
         android:name="com.example.drinkapp.presentation.ui.FavoriteFragment"
         android:label="Favorite"
         tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.drinkapp.presentation.ui.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" />
 </navigation>

@@ -1,6 +1,7 @@
 package com.example.drinkapp.data
 
 import com.example.drinkapp.domain.model.CategoriesModel
+import com.example.drinkapp.domain.model.DrinkDetails
 import com.example.drinkapp.domain.model.Drinks
 import retrofit2.Response
 import retrofit2.http.GET
@@ -21,5 +22,11 @@ interface ApiInterface {
     suspend fun getDrinksByCategories(
         @Query("c") c: String
     ): Response<Drinks>
+
+    @GET("lookup.php?")
+    suspend fun getDetailsDrinkById(
+        @Query("i") i: String
+    ): Response<DrinkDetails>
+
 
 }

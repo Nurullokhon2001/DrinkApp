@@ -6,41 +6,53 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.drinkapp.domain.model.CategoriesModel
 import com.example.drinkapp.domain.api_repository.ApiRepository
+import com.example.drinkapp.domain.model.DrinkDetails
 import com.example.drinkapp.domain.model.Drinks
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class CategoriesVm : ViewModel() {
 
-    val repo = ApiRepository()
+    private val repo = ApiRepository()
 
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     var isLoading: LiveData<Boolean> = _isLoading
 
-    fun setLoading(isLoading: Boolean) {
+    private fun setLoading(isLoading: Boolean) {
         _isLoading.postValue(isLoading)
     }
 
-    fun getCtgr(): LiveData<Response<CategoriesModel>> {
-        val ctgr = MutableLiveData<Response<CategoriesModel>>()
+
+    private val _ctgr = MutableLiveData<Response<CategoriesModel>>()
+    val ctgr = _ctgr
+    fun getCtgr() {
         viewModelScope.launch {
             setLoading(true)
-            ctgr.value = repo.getCategories()
+            _ctgr.value = repo.getCategories()
         }
-        return ctgr
     }
 
-    fun getDrinks(ctgrName: String): LiveData<Response<Drinks>> {
-
-        val drinks = MutableLiveData<Response<Drinks>>()
+    private val _drinks = MutableLiveData<Response<Drinks>>()
+    val drinks = _drinks
+    fun getDrinks(ctgrName: String) {
         viewModelScope.launch {
             setLoading(true)
-            drinks.value = repo.getDrinksByCategories(ctgrName)
+            _drinks.value = repo.getDrinksByCategories(ctgrName)
             setLoading(false)
         }
-
-        return drinks
     }
+
+
+    fun getDetailsDrinkById(id: String): LiveData<Response<DrinkDetails>> {
+        val detail = MutableLiveData<Response<DrinkDetails>>()
+        viewModelScope.launch {
+            setLoading(true)
+            detail.value = repo.getDetailsDrinkById(id)
+            setLoading(false)
+        }
+        return detail
+    }
+
 
 }

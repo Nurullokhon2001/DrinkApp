@@ -9,10 +9,13 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.drinkapp.R
 import com.example.drinkapp.domain.model.CategoriesModel
 import com.example.drinkapp.domain.model.Drink
+import com.example.drinkapp.domain.model.DrinkDetails
 import com.example.drinkapp.presentation.adapter.DrinkAdapter
 import com.example.drinkapp.presentation.vm.CategoriesVm
 import com.example.drinkapp.presentation.adapter.ViewPagerAdapter
@@ -28,31 +31,35 @@ class CategoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_category, container, false)
         val viewPager2: ViewPager2 = view.findViewById(R.id.viewpager)
         val tabLayout = view.findViewById<TabLayout>(R.id.tab_layout)
         val vm = ViewModelProvider(this).get(CategoriesVm::class.java)
         val progress = view.findViewById<ProgressBar>(R.id.progress)
 
-        val click = object : DrinkAdapter.DrinkOnclick{
+        val click = object : DrinkAdapter.DrinkOnclick {
             override fun clickItem(id: Int) {
-                Toast.makeText(requireContext(), "id = $id", Toast.LENGTH_SHORT).show()
+                //  Toast.makeText(requireContext(), "id = $id", Toast.LENGTH_SHORT).show()
+                val bundle = Bundle()
+
+                vm.getDetailsDrinkById(id.toString()).observe(viewLifecycleOwner) {
+                    val data: DrinkDetails? = it.body()
+                    bundle.putSerializable("Detail", data)
+                    findNavController().navigate(R.id.action_category_to_detailFragment,bundle)
+                }
             }
-
         }
-
-        vm.getCtgr().observe(viewLifecycleOwner) {
+        vm.getCtgr()
+        vm.ctgr.observe(viewLifecycleOwner) {
             ctgrArary = it.body()!!
-            adapter = ViewPagerAdapter(ctgrArary.categoriesNameModels, requireContext(),click)
+            adapter = ViewPagerAdapter(ctgrArary.categoriesNameModels, requireContext(), click)
             viewPager2.adapter = adapter
-
             TabLayoutMediator(tabLayout, viewPager2) { tab, position ->
                 tab.text = ctgrArary.categoriesNameModels[position].strCategory
-
-
             }.attach()
         }
+
+
 
         vm.isLoading.observe(viewLifecycleOwner) {
             if (it) {
@@ -68,10 +75,10 @@ class CategoryFragment : Fragment() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if (tab != null) {
                     vm.getDrinks(ctgrArary.categoriesNameModels[tab.position].strCategory)
-                        .observe(viewLifecycleOwner) {
-                            Log.e("onCreateView", "onCreateView: ${it.body()!!.drinks.size}")
-                            adapter.setData(it.body()!!.drinks as ArrayList<Drink>)
-                        }
+                    vm.drinks.observe(viewLifecycleOwner) {
+                        Log.e("onCreateView", "onCreateView: ${it.body()!!.drinks.size}")
+                        adapter.setData(it.body()!!.drinks as ArrayList<Drink>)
+                    }
                 }
             }
 
@@ -79,9 +86,11 @@ class CategoryFragment : Fragment() {
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
+                viewPager2.currentItem = 4
             }
         })
 
+        tabLayout.selectTab(tabLayout.getTabAt(5))
 
         return view
     }
