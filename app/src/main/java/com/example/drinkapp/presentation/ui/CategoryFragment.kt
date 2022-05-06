@@ -39,14 +39,12 @@ class CategoryFragment : Fragment() {
 
         val click = object : DrinkAdapter.DrinkOnclick {
             override fun clickItem(id: Int) {
-                //  Toast.makeText(requireContext(), "id = $id", Toast.LENGTH_SHORT).show()
-                val bundle = Bundle()
-
-                vm.getDetailsDrinkById(id.toString()).observe(viewLifecycleOwner) {
-                    val data: DrinkDetails? = it.body()
-                    bundle.putSerializable("Detail", data)
-                    findNavController().navigate(R.id.action_category_to_detailFragment,bundle)
-                }
+                //  findNavController().navigate(R.id.action_category_to_detailFragment)
+                val action = CategoryFragmentDirections.actionCategoryToDetailFragment(id)
+                Navigation.findNavController(view).navigate(action)
+//                vm.getDetailsDrinkById(id.toString()).observe(viewLifecycleOwner) {
+//
+//                }
             }
         }
         vm.getCtgr()
@@ -58,8 +56,6 @@ class CategoryFragment : Fragment() {
                 tab.text = ctgrArary.categoriesNameModels[position].strCategory
             }.attach()
         }
-
-
 
         vm.isLoading.observe(viewLifecycleOwner) {
             if (it) {
