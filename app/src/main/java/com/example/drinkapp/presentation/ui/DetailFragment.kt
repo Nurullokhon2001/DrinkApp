@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -32,15 +33,15 @@ class DetailFragment : Fragment() {
         setHasOptionsMenu(true)
         val view = inflater.inflate(R.layout.fragment_detail, container, false)
         val vm = ViewModelProvider(this).get(CategoriesVm::class.java)
-        val tv = view.findViewById<TextView>(R.id.tv_drink_detail)
+        val tvDetail = view.findViewById<TextView>(R.id.tv_drink_detail)
         val image = view.findViewById<ImageView>(R.id.iv_image)
         val tvIngredient = view.findViewById<TextView>(R.id.tv_ingredient_detail)
+        val progress = view.findViewById<ProgressBar>(R.id.progress)
         val id = args.id.toString()
-        tv.text
         vm.getDetailsDrinkById(id).observe(viewLifecycleOwner) { it ->
             it.body()?.let {
                 val details = it.drinks[0]
-                tv.text = "DateModified : ${details.dateModified} \n" +
+                tvDetail.text = "DateModified : ${details.dateModified} \n" +
                         "idDrink : ${details.idDrink} \n" +
                         "strAlcoholic : ${details.strAlcoholic} \n" +
                         "strCategory : ${details.strCategory} \n" +
@@ -67,9 +68,17 @@ class DetailFragment : Fragment() {
                     .into(image)
             }
 
-            vm.getIngredientById(id).observe(viewLifecycleOwner) { ingredient ->
-                ingredient.body()?.let {
-                    val ingredient = it.ingredients[0]
+            vm.isLoading.observe(viewLifecycleOwner) {
+                if (it) {
+                    progress.visibility = View.VISIBLE
+                } else {
+                    progress.visibility = View.GONE
+                }
+            }
+
+//            vm.getIngredientById(id).observe(viewLifecycleOwner) { ingredient ->
+//                ingredient.body()?.let {
+//                    val ingredient = it.ingredients[0]
 //                    ingredient.let {
 //                        tvIngredient.text = "strABV : ${ingredient.strABV}" +
 //                                " strAlcohol: ${ingredient.strAlcohol}" +
@@ -77,8 +86,8 @@ class DetailFragment : Fragment() {
 //                                "strIngredient : ${ingredient.strIngredient}" +
 //                                "strType : ${ingredient.strType}"
 //                    }
-                }
-            }
+//                }
+//            }
 
         }
 
