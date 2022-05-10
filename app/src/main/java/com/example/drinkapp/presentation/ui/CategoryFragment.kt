@@ -39,12 +39,9 @@ class CategoryFragment : Fragment() {
 
         val click = object : DrinkAdapter.DrinkOnclick {
             override fun clickItem(id: Int) {
-                //  findNavController().navigate(R.id.action_category_to_detailFragment)
                 val action = CategoryFragmentDirections.actionCategoryToDetailFragment(id)
                 Navigation.findNavController(view).navigate(action)
-//                vm.getDetailsDrinkById(id.toString()).observe(viewLifecycleOwner) {
-//
-//                }
+
             }
         }
         vm.getCtgr()

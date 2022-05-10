@@ -8,6 +8,8 @@ import com.example.drinkapp.domain.model.CategoriesModel
 import com.example.drinkapp.domain.api_repository.ApiRepository
 import com.example.drinkapp.domain.model.DrinkDetails
 import com.example.drinkapp.domain.model.Drinks
+import com.example.drinkapp.domain.model.IngredientModel
+import com.example.drinkapp.domain.retrofit.RetrofitInstance
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -54,5 +56,14 @@ class CategoriesVm : ViewModel() {
         return detail
     }
 
+    fun getIngredientById(id: String): LiveData<Response<IngredientModel>> {
+        val ingredient = MutableLiveData<Response<IngredientModel>>()
+        viewModelScope.launch {
+            setLoading(true)
+            ingredient.value = repo.getIngredientById(id)
+            setLoading(false)
+        }
+        return ingredient
+    }
 
 }
