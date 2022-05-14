@@ -35,5 +35,10 @@ interface ApiInterface {
         @Query("iid") i: String
     ): Response<IngredientModel>
 
+    //  https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita
+    @GET("search.php?")
+    suspend fun getDrinksByName(
+        @Query("s") s: String
+    ): Response<DrinkDetails>
 
 }

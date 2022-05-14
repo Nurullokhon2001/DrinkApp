@@ -25,4 +25,8 @@ class ApiRepository {
         return RetrofitInstance.getCategories().getIngredientById(id)
     }
 
+    suspend fun getDrinksByName(name: String): Response<DrinkDetails> {
+        return RetrofitInstance.getCategories().getDrinksByName(name)
+    }
+
 }

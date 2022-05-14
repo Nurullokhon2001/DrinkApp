@@ -99,6 +99,11 @@ class CategoryFragment : Fragment() {
             override fun onQueryTextChange(newText: String): Boolean {
                 Log.e("onQueryTextSubmit", "onQueryTextSubmit: $newText")
                 if (newText.isNotEmpty()) {
+//                    getDrinksByName
+                    vm.getDrinksByName(newText).observe(viewLifecycleOwner) {
+                        Log.e("onCreateView", "onCreateView: ${it.body()!!.drinks.size}")
+                        adapter.setData(it.body()!!.drinks.map { Drink(it.idDrink,it.strDrink,it.strDrinkThumb) } as ArrayList<Drink>)
+                    }
                     tabLayout.visibility = View.GONE
                 } else{
                     tabLayout.visibility = View.VISIBLE

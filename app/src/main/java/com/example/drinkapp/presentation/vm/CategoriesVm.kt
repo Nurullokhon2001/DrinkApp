@@ -66,4 +66,14 @@ class CategoriesVm : ViewModel() {
         return ingredient
     }
 
+    fun getDrinksByName(name: String): LiveData<Response<DrinkDetails>> {
+        val detail = MutableLiveData<Response<DrinkDetails>>()
+        viewModelScope.launch {
+            setLoading(true)
+            detail.value = repo.getDrinksByName(name)
+            setLoading(false)
+        }
+        return detail
+    }
+
 }
