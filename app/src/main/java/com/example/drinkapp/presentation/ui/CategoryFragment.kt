@@ -4,63 +4,78 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
-import android.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager2.widget.ViewPager2
-import com.example.drinkapp.NumberAdapter
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.drinkapp.R
-import com.example.drinkapp.domain.model.CategoriesModel
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.presentation.adapter.DrinkAdapter
-import com.example.drinkapp.presentation.adapter.ViewPagerAdapter
 import com.example.drinkapp.presentation.vm.CategoriesVm
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+
+
+const val ARG_OBJECT = "object"
 
 class CategoryFragment : Fragment() {
 
-
+    private lateinit var progress: ProgressBar
+    private lateinit var adapter: DrinkAdapter
     private lateinit var vm: CategoriesVm
-    private lateinit var ctgrArary: CategoriesModel
-    private lateinit var adapter: NumberAdapter
-    private lateinit var viewPager: ViewPager2
-    private lateinit var tabLayout: TabLayout
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_category, container, false)
-//        initViews(view)
+        //  setHasOptionsMenu(true)
+        return inflater.inflate(R.layout.fragment_category, container, false)
+    }
 
-        viewPager = view.findViewById(R.id.viewpager)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    initViews(view)
 
-        tabLayout = view.findViewById(R.id.tab_layout)
-        vm = ViewModelProvider(this).get(CategoriesVm::class.java)
-        vm.getCtgr()
-        vm.ctgr.observe(viewLifecycleOwner) {
-            ctgrArary = it.body()!!
-            adapter = NumberAdapter(requireActivity(),ctgrArary)
-            viewPager.adapter = adapter
-            Log.e("onCreate", ctgrArary.categoriesNameModels.size.toString())
-            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-                tab.text = ctgrArary.categoriesNameModels[position].strCategory
-            }.attach()
+        arguments?.takeIf { it.containsKey(ARG_OBJECT) }?.apply {
+            vm.getDrinks(getString(ARG_OBJECT).toString())
         }
 
 
-        tabLayout.selectTab(tabLayout.getTabAt(5))
+        vm.drinks.observe(viewLifecycleOwner) {
+            Log.e("onCreateView", "onCreateView: ${it.body()!!.drinks.size}")
+            adapter.setData(it.body()!!.drinks as ArrayList<Drink>)
+        }
 
-        return view
+        vm.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                progress.visibility = View.VISIBLE
+            } else {
+                progress.visibility = View.GONE
+            }
+        }
+
     }
 
+    private fun initViews(view: View) {
+        vm = ViewModelProvider(this).get(CategoriesVm::class.java)
+        adapter = DrinkAdapter(requireContext(), click)
+        progress = view.findViewById(R.id.progress)
+        recyclerView = view.findViewById(R.id.iv_pager)
+        recyclerView.layoutManager = GridLayoutManager(context, 2)
+        recyclerView.adapter = adapter
+    }
 
-//    private fun initViews(view: View) {
-//        viewPager = view.findViewById(R.id.viewpager)
-//        tabLayout = view.findViewById(R.id.tab_layout)
-//        vm = ViewModelProvider(this).get(CategoriesVm::class.java)
-//    }
+    private val click = object : DrinkAdapter.DrinkOnclick {
+        override fun clickItem(id: Int) {
+            val ldf = DetailFragment()
+            val args = Bundle()
+            args.putString("id", id.toString())
+            ldf.arguments = args
+            requireActivity().supportFragmentManager.beginTransaction().apply {
+                add(R.id.nav_host_fragment, ldf)
+                addToBackStack(null)
+                commit()
+
+            }
+        }
+    }
 
 }

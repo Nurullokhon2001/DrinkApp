@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.drinkapp.data.api_repository.ApiRepository
 import com.example.drinkapp.domain.model.DrinkDetails
-import com.example.drinkapp.domain.model.Drinks
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class CategoriesVm : ViewModel() {
+class DetailViewModel:ViewModel() {
+
 
     private val repo = ApiRepository()
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -20,24 +20,13 @@ class CategoriesVm : ViewModel() {
         _isLoading.postValue(isLoading)
     }
 
-    private val _drinks = MutableLiveData<Response<Drinks>>()
-    val drinks = _drinks
-    fun getDrinks(ctgrName: String) {
-        viewModelScope.launch {
-            setLoading(true)
-            _drinks.value = repo.getDrinksByCategories(ctgrName)
-            setLoading(false)
-        }
-    }
-
-    fun getDrinksByName(name: String): LiveData<Response<DrinkDetails>> {
+    fun getDetailsDrinkById(id: String): LiveData<Response<DrinkDetails>> {
         val detail = MutableLiveData<Response<DrinkDetails>>()
         viewModelScope.launch {
             setLoading(true)
-            detail.value = repo.getDrinksByName(name)
+            detail.value = repo.getDetailsDrinkById(id)
             setLoading(false)
         }
         return detail
     }
-
 }

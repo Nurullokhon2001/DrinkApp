@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 
-import com.example.drinkapp.presentation.ui.CategoryFragment
+import com.example.drinkapp.presentation.ui.MainFragment
 import com.example.drinkapp.presentation.ui.FavoriteFragment
 import com.example.drinkapp.presentation.ui.HistoryFragment
 import com.example.drinkapp.presentation.ui.SettingsFragment
@@ -22,11 +22,11 @@ class MainActivity : AppCompatActivity() {
 //        bottomNavigationView.setupWithNavController(navController)
 
         val   bottomNavigationView : BottomNavigationView = findViewById(R.id.btn_view)
-        setCurrentFragment(CategoryFragment())
+        setCurrentFragment(MainFragment())
 
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.category->setCurrentFragment(CategoryFragment())
+                R.id.category->setCurrentFragment(MainFragment())
                 R.id.history->setCurrentFragment(HistoryFragment())
                 R.id.settings->setCurrentFragment(SettingsFragment())
                 R.id.favorite->setCurrentFragment(FavoriteFragment())

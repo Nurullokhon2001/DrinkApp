@@ -3,7 +3,6 @@ package com.example.drinkapp.data
 import com.example.drinkapp.domain.model.CategoriesModel
 import com.example.drinkapp.domain.model.DrinkDetails
 import com.example.drinkapp.domain.model.Drinks
-import com.example.drinkapp.domain.model.IngredientModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -30,15 +29,9 @@ interface ApiInterface {
         @Query("i") i: String
     ): Response<DrinkDetails>
 
-    @GET("lookup.php?")
-    suspend fun getIngredientById(
-        @Query("iid") i: String
-    ): Response<IngredientModel>
-
     //  https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita
     @GET("search.php?")
     suspend fun getDrinksByName(
         @Query("s") s: String
     ): Response<DrinkDetails>
-
 }

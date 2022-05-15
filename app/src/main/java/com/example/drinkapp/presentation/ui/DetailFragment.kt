@@ -1,44 +1,40 @@
 package com.example.drinkapp.presentation.ui
 
 import android.annotation.SuppressLint
-import android.media.Image
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.drinkapp.R
-import com.example.drinkapp.presentation.vm.CategoriesVm
-import org.w3c.dom.Text
+import com.example.drinkapp.presentation.vm.DetailViewModel
 
 class DetailFragment : Fragment() {
+
+    private lateinit var vm: DetailViewModel
+    private lateinit var tvDetail: TextView
+    private lateinit var image: ImageView
     private lateinit var progress: ProgressBar
+
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        setHasOptionsMenu(true)
-        val view = inflater.inflate(R.layout.fragment_detail, container, false)
-        return view
+        return inflater.inflate(R.layout.fragment_detail, container, false)
 
     }
+
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val  vm = ViewModelProvider(this).get(CategoriesVm::class.java)
-        val tvDetail = view.findViewById<TextView>(R.id.tv_drink_detail)
-        val image = view.findViewById<ImageView>(R.id.iv_image)
-        val tvIngredient = view.findViewById<TextView>(R.id.tv_ingredient_detail)
-        val progress = view.findViewById<ProgressBar>(R.id.progress)
+
+        initViews(view)
         arguments?.takeIf { it.containsKey("id") }?.apply {
             vm.getDetailsDrinkById(getString("id").toString()).observe(viewLifecycleOwner) { it ->
                 it.body()?.let {
@@ -78,21 +74,15 @@ class DetailFragment : Fragment() {
                     }
                 }
 
-//            vm.getIngredientById(id).observe(viewLifecycleOwner) { ingredient ->
-//                ingredient.body()?.let {
-//                    val ingredient = it.ingredients[0]
-//                    ingredient.let {
-//                        tvIngredient.text = "strABV : ${ingredient.strABV}" +
-//                                " strAlcohol: ${ingredient.strAlcohol}" +
-//                                "strDescription : ${ingredient.strDescription}" +
-//                                "strIngredient : ${ingredient.strIngredient}" +
-//                                "strType : ${ingredient.strType}"
-//                    }
-//                }
-//            }
-
             }
         }
+    }
+
+    private fun initViews(view: View) {
+        vm = ViewModelProvider(this).get(DetailViewModel::class.java)
+        tvDetail = view.findViewById(R.id.tv_drink_detail)
+        image = view.findViewById(R.id.iv_image)
+        progress = view.findViewById(R.id.progress)
     }
 
 }

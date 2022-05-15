@@ -17,25 +17,37 @@ import com.example.drinkapp.presentation.vm.CategoriesVm
 
 class HistoryFragment : Fragment() {
 
-    lateinit var rv: RecyclerView
+    private lateinit var rv: RecyclerView
+    private lateinit var adapter: DrinkAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_history, container, false)
-        rv = view.findViewById(R.id.rv)
-        val vm = ViewModelProvider(this).get(CategoriesVm::class.java)
-//        val adapter = DrinkAdapter(requireContext())
-//        rv.adapter = adapter
-        rv.layoutManager = GridLayoutManager(requireContext(),2)
-        vm.getDrinks("COCKTAIL")
-//            .observe(viewLifecycleOwner) {
-//                Log.e("onCreateView", "onCreateView: ${it.body()!!.drinks.size}")
-////                adapter.setData(it.body()!!.drinks as ArrayList<Drink>)
-//            }
+        initViews(view)
         return view
+    }
+
+    private fun initViews(view: View) {
+        rv = view.findViewById(R.id.rv)
+        adapter = DrinkAdapter(requireContext(), click)
+        rv.adapter = adapter
+        rv.layoutManager = GridLayoutManager(requireContext(), 2)
+    }
+
+    private val click = object : DrinkAdapter.DrinkOnclick {
+        override fun clickItem(id: Int) {
+            val ldf = DetailFragment()
+            val args = Bundle()
+            args.putString("id", id.toString())
+            ldf.arguments = args
+            requireActivity().supportFragmentManager.beginTransaction().apply {
+                add(R.id.nav_host_fragment, ldf)
+                addToBackStack(null)
+                commit()
+            }
+        }
     }
 
 }
