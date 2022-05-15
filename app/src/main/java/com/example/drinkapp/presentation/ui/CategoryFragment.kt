@@ -52,44 +52,10 @@ class CategoryFragment : Fragment() {
 
 
         tabLayout.selectTab(tabLayout.getTabAt(5))
-        setHasOptionsMenu(true)
+
         return view
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.toolbar_menu, menu)
-        val mSearch = menu.findItem(R.id.action_search)
-        val mSearchView: SearchView = mSearch.actionView as SearchView
-
-        mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                Log.e("onQueryTextSubmit", "onQueryTextSubmit: doooooo")
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                Log.e("onQueryTextSubmit", "onQueryTextSubmit: $newText")
-                if (newText.isNotEmpty()) {
-//                    getDrinksByName
-//                    vm.getDrinksByName(newText).observe(viewLifecycleOwner) {
-//                        Log.e("onCreateView", "onCreateView: ${it.body()!!.drinks.size}")
-////                        adapter.setData(it.body()!!.drinks.map {
-////                            Drink(
-////                                it.idDrink,
-////                                it.strDrink,
-////                                it.strDrinkThumb
-////                            )
-////                        } as ArrayList<Drink>)
-//                    }
-                    tabLayout.visibility = View.GONE
-                } else {
-                    tabLayout.visibility = View.VISIBLE
-                }
-                return false
-            }
-        })
-        super.onCreateOptionsMenu(menu, inflater)
-    }
 
 //    private fun initViews(view: View) {
 //        viewPager = view.findViewById(R.id.viewpager)
