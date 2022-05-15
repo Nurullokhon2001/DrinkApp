@@ -39,4 +39,12 @@
             app:argType="integer"
             android:defaultValue="2" />
     </fragment>
+    <fragment
+        android:id="@+id/numberFragment"
+        android:name="com.example.drinkapp.NumberFragment"
+        android:label="NumberFragment" >
+        <action
+            android:id="@+id/action_category_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
 </navigation>

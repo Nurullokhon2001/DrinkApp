@@ -16,8 +16,6 @@ import retrofit2.Response
 class CategoriesVm : ViewModel() {
 
     private val repo = ApiRepository()
-
-
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     var isLoading: LiveData<Boolean> = _isLoading
 
@@ -27,7 +25,7 @@ class CategoriesVm : ViewModel() {
 
 
     private val _ctgr = MutableLiveData<Response<CategoriesModel>>()
-    val ctgr = _ctgr
+    val ctgr: LiveData<Response<CategoriesModel>> = _ctgr
     fun getCtgr() {
         viewModelScope.launch {
             setLoading(true)
