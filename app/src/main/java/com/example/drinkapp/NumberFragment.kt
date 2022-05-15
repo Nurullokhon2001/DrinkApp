@@ -7,12 +7,13 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.presentation.adapter.DrinkAdapter
+import com.example.drinkapp.presentation.ui.DetailFragment
 import com.example.drinkapp.presentation.vm.CategoriesVm
 
 
@@ -59,19 +60,18 @@ class NumberFragment : Fragment() {
     private val click = object : DrinkAdapter.DrinkOnclick {
         override fun clickItem(id: Int) {
 
-//            val ldf = DetailFragment()
-//            val args = Bundle()
-//            args.putString("id", id.toString())
-//            ldf.arguments = args
-////            requireActivity().supportFragmentManager.beginTransaction()
-////                .replace(R.id.nav_host_fragment, ldf).addToBackStack(null).commit()
-//
-//            val ft: FragmentTransaction = fragmentManager!!.beginTransaction()
-//            ft.replace(R.id.nav_host_fragment, ldf ).addToBackStack(null)
-//            ft.commit()'
+            val ldf = DetailFragment()
+            val args = Bundle()
+            args.putString("id", id.toString())
+            ldf.arguments = args
+//            requireActivity().supportFragmentManager.beginTransaction()
+//                .replace(R.id.nav_host_fragment, ldf).addToBackStack(null).commit()
 
-            val action = NumberFragmentDirections.actionCategoryToDetailFragment(id)
-            view?.let { Navigation.findNavController(it).navigate(action) }
+            val ft: FragmentTransaction = fragmentManager!!.beginTransaction()
+            ft.replace(R.id.nav_host_fragment, ldf ).addToBackStack(null)
+            ft.commit()
+
+
 
             Toast.makeText(requireContext(), "$id", Toast.LENGTH_SHORT).show()
 

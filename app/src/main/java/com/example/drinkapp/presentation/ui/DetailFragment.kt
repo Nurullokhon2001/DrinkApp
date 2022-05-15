@@ -13,8 +13,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.drinkapp.R
 import com.example.drinkapp.presentation.vm.CategoriesVm
@@ -22,7 +20,7 @@ import org.w3c.dom.Text
 
 class DetailFragment : Fragment() {
     private lateinit var progress: ProgressBar
-    val args : DetailFragmentArgs by navArgs()
+
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,15 +32,6 @@ class DetailFragment : Fragment() {
         return view
 
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            findNavController().popBackStack()
-            return true
-        }
-        return true
-    }
-
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val  vm = ViewModelProvider(this).get(CategoriesVm::class.java)
@@ -51,7 +40,7 @@ class DetailFragment : Fragment() {
         val tvIngredient = view.findViewById<TextView>(R.id.tv_ingredient_detail)
         val progress = view.findViewById<ProgressBar>(R.id.progress)
         arguments?.takeIf { it.containsKey("id") }?.apply {
-            vm.getDetailsDrinkById(args.id.toString()).observe(viewLifecycleOwner) { it ->
+            vm.getDetailsDrinkById(getString("id").toString()).observe(viewLifecycleOwner) { it ->
                 it.body()?.let {
                     val details = it.drinks[0]
                     tvDetail.text = "DateModified : ${details.dateModified} \n" +
