@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.SearchView
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -24,6 +23,7 @@ class SearchFragment : Fragment() {
     private lateinit var adapter: DrinkAdapter
     private lateinit var vm: CategoriesVm
     private lateinit var recyclerView: RecyclerView
+    private lateinit var mSearch: TextInputEditText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +32,7 @@ class SearchFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_search, container, false)
         initViews(view)
-        val mSearch = view.findViewById<TextInputEditText>(R.id.edit_text)
+
 
         vm.isLoading.observe(viewLifecycleOwner) {
             if (it) {
@@ -70,6 +70,7 @@ class SearchFragment : Fragment() {
 
     private fun initViews(view: View) {
         vm = ViewModelProvider(this).get(CategoriesVm::class.java)
+        mSearch = view.findViewById(R.id.edit_text)
         adapter = DrinkAdapter(requireContext(), click)
         progress = view.findViewById(R.id.progress)
         recyclerView = view.findViewById(R.id.iv_pager)
