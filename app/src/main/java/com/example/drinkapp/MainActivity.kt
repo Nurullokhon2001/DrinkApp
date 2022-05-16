@@ -3,11 +3,8 @@ package com.example.drinkapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.example.drinkapp.presentation.ui.*
 
-import com.example.drinkapp.presentation.ui.MainFragment
-import com.example.drinkapp.presentation.ui.FavoriteFragment
-import com.example.drinkapp.presentation.ui.HistoryFragment
-import com.example.drinkapp.presentation.ui.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -21,23 +18,25 @@ class MainActivity : AppCompatActivity() {
 //        setupActionBarWithNavController(navController, appBarConfiguration)
 //        bottomNavigationView.setupWithNavController(navController)
 
-        val   bottomNavigationView : BottomNavigationView = findViewById(R.id.btn_view)
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.btn_view)
         setCurrentFragment(MainFragment())
 
-        bottomNavigationView.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.category->setCurrentFragment(MainFragment())
-                R.id.history->setCurrentFragment(HistoryFragment())
-                R.id.settings->setCurrentFragment(SettingsFragment())
-                R.id.favorite->setCurrentFragment(FavoriteFragment())
+        bottomNavigationView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.category -> setCurrentFragment(MainFragment())
+                R.id.history -> setCurrentFragment(HistoryFragment())
+                R.id.settings -> setCurrentFragment(SettingsFragment())
+                R.id.favorite -> setCurrentFragment(FavoriteFragment())
+                R.id.search -> setCurrentFragment(SearchFragment())
             }
             true
         }
 
     }
-    private fun setCurrentFragment(fragment: Fragment)=
+
+    private fun setCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.nav_host_fragment,fragment)
+            replace(R.id.nav_host_fragment, fragment)
             commit()
         }
 
