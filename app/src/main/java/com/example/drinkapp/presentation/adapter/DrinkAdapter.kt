@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.drinkapp.R
+import com.example.drinkapp.data.model.HistoryModel
 import com.example.drinkapp.domain.model.Drink
 
 class DrinkAdapter(private val context: Context, private val mItemClickListener: DrinkOnclick) :
@@ -21,7 +22,7 @@ class DrinkAdapter(private val context: Context, private val mItemClickListener:
     }
 
     interface DrinkOnclick {
-        fun clickItem(id: Int)
+        fun clickItem(id: Drink)
 
     }
 
@@ -41,7 +42,7 @@ class DrinkAdapter(private val context: Context, private val mItemClickListener:
             .into(holder.image)
         holder.tvName.text = array[position].strDrink
         holder.itemView.setOnClickListener {
-            mItemClickListener.clickItem(array[position].idDrink.toInt())
+            mItemClickListener.clickItem(array[position])
         }
     }
 
