@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -14,12 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.drinkapp.App
 import com.example.drinkapp.R
 import com.example.drinkapp.data.mappers.Mappers
-import com.example.drinkapp.data.model.HistoryModel
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.presentation.adapter.DrinkAdapter
 import com.example.drinkapp.presentation.vm.CategoriesVm
-import com.example.drinkapp.presentation.vm.HistoryVM
-import com.example.drinkapp.presentation.vm.HistoryViewModelFactory
+import com.example.drinkapp.presentation.vm.RoomViewModel
+import com.example.drinkapp.presentation.vm.RoomViewModelFactory
 
 
 const val ARG_OBJECT = "object"
@@ -31,8 +29,8 @@ class CategoryFragment : Fragment() {
     private lateinit var vm: CategoriesVm
     private lateinit var recyclerView: RecyclerView
 
-    private val historyVm: HistoryVM by viewModels {
-        HistoryViewModelFactory((activity?.application as App).repository)
+    private val roomViewModel: RoomViewModel by viewModels {
+        RoomViewModelFactory((activity?.application as App).repository)
     }
 
     override fun onCreateView(
@@ -86,7 +84,7 @@ class CategoryFragment : Fragment() {
                 addToBackStack(null)
                 commit()
 
-                historyVm.insertHistory(Mappers.mapDrinkToHistoryModel(model))
+                roomViewModel.insertHistory(Mappers.mapDrinkToHistoryModel(model))
 
             }
         }
@@ -100,7 +98,7 @@ class CategoryFragment : Fragment() {
                     dialog.cancel()
                 }
                 setNegativeButton("Add to favorite") { dialog, _ ->
-                    historyVm.insertFavorites(Mappers.mapDrinkToFavoritesModel(model))
+                    roomViewModel.insertFavorites(Mappers.mapDrinkToFavoritesModel(model))
                     dialog.cancel()
                 }
                 show()

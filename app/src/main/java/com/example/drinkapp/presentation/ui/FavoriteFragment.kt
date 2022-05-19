@@ -12,15 +12,15 @@ import com.example.drinkapp.App
 import com.example.drinkapp.R
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.presentation.adapter.DrinkAdapter
-import com.example.drinkapp.presentation.vm.HistoryVM
-import com.example.drinkapp.presentation.vm.HistoryViewModelFactory
+import com.example.drinkapp.presentation.vm.RoomViewModel
+import com.example.drinkapp.presentation.vm.RoomViewModelFactory
 
 class FavoriteFragment : Fragment() {
 
     private lateinit var rv: RecyclerView
     private lateinit var adapter: DrinkAdapter
-    private val historyVm: HistoryVM by viewModels {
-        HistoryViewModelFactory((activity?.application as App).repository)
+    private val roomViewModel: RoomViewModel by viewModels {
+        RoomViewModelFactory((activity?.application as App).repository)
     }
 
     override fun onCreateView(
@@ -33,7 +33,7 @@ class FavoriteFragment : Fragment() {
         rv.adapter = adapter
         rv.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        historyVm.allFavorites.observe(viewLifecycleOwner) { it ->
+        roomViewModel.allFavorites.observe(viewLifecycleOwner) { it ->
             it?.let { it ->
                 adapter.setData(it.map { Drink(it.idDrink,it.drinkName,it.drinkImage) } as ArrayList<Drink>)
             }
