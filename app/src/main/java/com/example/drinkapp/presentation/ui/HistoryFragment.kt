@@ -27,7 +27,6 @@ class HistoryFragment : Fragment() {
         HistoryViewModelFactory((activity?.application as App).repository)
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,6 +59,10 @@ class HistoryFragment : Fragment() {
                 commit()
             }
         }
-    }
 
+        override fun longClickItem(id: Drink): Boolean {
+            TODO("Not yet implemented")
+        }
+
+    }
 }

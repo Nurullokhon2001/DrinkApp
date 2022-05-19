@@ -89,6 +89,9 @@ class SearchFragment : Fragment() {
                 commit()
             }
         }
-    }
 
+        override fun longClickItem(id: Drink): Boolean {
+            TODO("Not yet implemented")
+        }
+    }
 }

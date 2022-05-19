@@ -1,9 +1,11 @@
 package com.example.drinkapp.presentation.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -87,6 +89,26 @@ class CategoryFragment : Fragment() {
                 historyVm.insertHistory(Mappers.mapDrinkToHistoryModel(model))
 
             }
+        }
+
+        override fun longClickItem(model: Drink): Boolean {
+            val builder = AlertDialog.Builder(requireContext())
+            with(builder)
+            {
+                setMessage("Choose which one, add to:")
+                setPositiveButton("Cancel") { dialog, _ ->
+                    dialog.cancel()
+                }
+                setNegativeButton("Add to favorite") { dialog, _ ->
+                    historyVm.insertFavorites(Mappers.mapDrinkToFavoritesModel(model))
+                    dialog.cancel()
+                }
+                show()
+            }
+
+//            Toast.makeText(requireContext(), "123", Toast.LENGTH_SHORT).show()
+
+            return true
         }
     }
 }

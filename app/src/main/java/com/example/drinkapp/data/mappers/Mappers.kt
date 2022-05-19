@@ -1,5 +1,6 @@
 package com.example.drinkapp.data.mappers
 
+import com.example.drinkapp.data.model.FavoritesModel
 import com.example.drinkapp.data.model.HistoryModel
 import com.example.drinkapp.domain.model.Drink
 
@@ -13,13 +14,14 @@ class Mappers {
                 drink.strDrinkThumb
             )
         }
-    }
 
-    fun mapHistoryModelToDrink(historyModel: HistoryModel): Drink {
-        return Drink(
-            historyModel.idDrink,
-            historyModel.drinkName,
-            historyModel.drinkImg
-        )
+        fun mapDrinkToFavoritesModel(drink: Drink):  FavoritesModel{
+            return FavoritesModel(
+                drink.idDrink,
+                drink.strDrink,
+                drink.strDrinkThumb
+            )
+        }
+
     }
 }

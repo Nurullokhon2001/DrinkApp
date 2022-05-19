@@ -23,6 +23,7 @@ class DrinkAdapter(private val context: Context, private val mItemClickListener:
 
     interface DrinkOnclick {
         fun clickItem(id: Drink)
+        fun longClickItem(id: Drink): Boolean
 
     }
 
@@ -43,6 +44,9 @@ class DrinkAdapter(private val context: Context, private val mItemClickListener:
         holder.tvName.text = array[position].strDrink
         holder.itemView.setOnClickListener {
             mItemClickListener.clickItem(array[position])
+        }
+        holder.itemView.setOnLongClickListener {
+            mItemClickListener.longClickItem(array[position])
         }
     }
 
