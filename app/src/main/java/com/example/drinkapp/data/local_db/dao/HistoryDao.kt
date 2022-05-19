@@ -1,4 +1,4 @@
-package com.example.drinkapp.domain.local_db.dao
+package com.example.drinkapp.data.local_db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert

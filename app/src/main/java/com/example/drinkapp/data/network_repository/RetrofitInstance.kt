@@ -1,4 +1,4 @@
-package com.example.drinkapp.domain.network
+package com.example.drinkapp.data.network_repository
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

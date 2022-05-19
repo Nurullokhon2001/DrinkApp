@@ -1,11 +1,11 @@
-package com.example.drinkapp.domain.local_db
+package com.example.drinkapp.data.local_db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.drinkapp.data.model.HistoryModel
-import com.example.drinkapp.domain.local_db.dao.HistoryDao
+import com.example.drinkapp.data.local_db.dao.HistoryDao
 
 @Database(entities = [HistoryModel::class], version = 1, exportSchema = false)
 abstract class DrinkRoomDataBase : RoomDatabase() {

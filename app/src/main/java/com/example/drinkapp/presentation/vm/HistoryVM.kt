@@ -1,10 +1,8 @@
 package com.example.drinkapp.presentation.vm
 
 import androidx.lifecycle.*
-import com.example.drinkapp.data.local_db_repository.DrinkRepository
+import com.example.drinkapp.data.local_db.DrinkRepository
 import com.example.drinkapp.data.model.HistoryModel
-import com.example.drinkapp.domain.local_db.DrinkRoomDataBase
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class HistoryVM(private val repository: DrinkRepository) : ViewModel() {

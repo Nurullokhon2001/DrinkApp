@@ -1,4 +1,4 @@
-package com.example.drinkapp.domain.network
+package com.example.drinkapp.data.network_repository
 
 import com.example.drinkapp.domain.model.CategoriesModel
 import com.example.drinkapp.domain.model.DrinkDetails

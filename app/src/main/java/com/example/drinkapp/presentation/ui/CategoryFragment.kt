@@ -74,18 +74,19 @@ class CategoryFragment : Fragment() {
     }
 
     private val click = object : DrinkAdapter.DrinkOnclick {
-        override fun clickItem(id: Drink) {
-//            val ldf = DetailFragment()
-//            val args = Bundle()
-//            args.putString("id", id.toString())
-//            ldf.arguments = args
-//            requireActivity().supportFragmentManager.beginTransaction().apply {
-//                add(R.id.nav_host_fragment, ldf)
-//                addToBackStack(null)
-//                commit()
+        override fun clickItem(model: Drink) {
+            val ldf = DetailFragment()
+            val args = Bundle()
+            args.putString("id", model.idDrink)
+            ldf.arguments = args
+            requireActivity().supportFragmentManager.beginTransaction().apply {
+                add(R.id.nav_host_fragment, ldf)
+                addToBackStack(null)
+                commit()
 
-            historyVm.insertHistory(Mappers.mapDrinkToHistoryModel(id))
+                historyVm.insertHistory(Mappers.mapDrinkToHistoryModel(model))
 
+            }
         }
     }
 }
