@@ -50,8 +50,10 @@ class CategoryFragment : Fragment() {
 
 
         vm.drinks.observe(viewLifecycleOwner) {
-            Log.e("onCreateView", "onCreateView: ${it.body()!!.drinks.size}")
-            adapter.setData(it.body()!!.drinks as ArrayList<Drink>)
+           it?.let {
+               Log.e("onCreateView", "onCreateView: ${it.body()!!.drinks.size}")
+               adapter.setData(it.body()!!.drinks as ArrayList<Drink>)
+           }
         }
 
         vm.isLoading.observe(viewLifecycleOwner) {

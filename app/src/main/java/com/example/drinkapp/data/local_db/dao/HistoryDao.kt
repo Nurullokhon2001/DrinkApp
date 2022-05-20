@@ -4,8 +4,10 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.drinkapp.data.model.CategoriesDBModel
 import com.example.drinkapp.data.model.FavoritesModel
 import com.example.drinkapp.data.model.HistoryModel
+import com.example.drinkapp.domain.model.CategoriesNameModel
 import kotlinx.coroutines.flow.Flow
 
 
@@ -33,9 +35,20 @@ interface HistoryDao {
     suspend fun insertFavoriteDrink(favoritesModel: FavoritesModel)
 
     @Query("Delete from Favorite where idDrink = :id")
-    suspend  fun deleteFavorites(id: Int)
+    suspend fun deleteFavorites(id: Int)
 
 //    @Query("SELECT EXISTS (SELECT 1 FROM example_table WHERE id = :id)")
 //    fun exists(id: Int): Boolean
+
+    //Category
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+   suspend fun insertCategories(categories: List<CategoriesDBModel>)
+
+    @Query("Select * from CategoryTable ")
+    fun getCategories(): Flow<List<CategoriesDBModel>>
+
+    @Query("Delete from CategoryTable")
+    fun deleteCategories()
+
 
 }

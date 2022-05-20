@@ -2,6 +2,7 @@ package com.example.drinkapp.presentation.vm
 
 import androidx.lifecycle.*
 import com.example.drinkapp.data.local_db.DrinkRepository
+import com.example.drinkapp.data.model.CategoriesDBModel
 import com.example.drinkapp.data.model.FavoritesModel
 import com.example.drinkapp.data.model.HistoryModel
 import kotlinx.coroutines.launch
@@ -30,6 +31,12 @@ class RoomViewModel(private val repository: DrinkRepository) : ViewModel() {
 
     fun deleteFavorites(id: Int) {
         viewModelScope.launch { repository.deleteFavorite(id) }
+    }
+
+    fun insertCategories(categories: List<CategoriesDBModel>){
+        viewModelScope.launch {
+            repository.insertCategories(categories)
+        }
     }
 
 }

@@ -15,13 +15,13 @@ class Mappers {
             )
         }
 
-        fun mapDrinkToFavoritesModel(drink: Drink):  FavoritesModel{
+        fun mapDrinkToFavoritesModel(drink: Drink): FavoritesModel {
             return FavoritesModel(
                 drink.idDrink,
                 drink.strDrink,
                 drink.strDrinkThumb
             )
         }
-
     }
+
 }

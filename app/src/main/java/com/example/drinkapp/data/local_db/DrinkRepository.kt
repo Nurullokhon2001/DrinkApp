@@ -3,6 +3,7 @@ package com.example.drinkapp.data.local_db
 import androidx.annotation.WorkerThread
 import com.example.drinkapp.data.model.HistoryModel
 import com.example.drinkapp.data.local_db.dao.HistoryDao
+import com.example.drinkapp.data.model.CategoriesDBModel
 import com.example.drinkapp.data.model.FavoritesModel
 import kotlinx.coroutines.flow.Flow
 
@@ -26,6 +27,10 @@ class DrinkRepository(private val historyDao: HistoryDao) {
 
     suspend fun deleteFavorite(id: Int) {
         historyDao.deleteFavorites(id)
+    }
+
+    suspend fun insertCategories(categories: List<CategoriesDBModel>) {
+        historyDao.insertCategories(categories)
     }
 
 //    suspend fun

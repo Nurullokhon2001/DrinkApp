@@ -47,16 +47,18 @@ class SearchFragment : Fragment() {
                 if (it.isNotEmpty()) {
                     vm.getDrinksByName(it.toString()).observe(viewLifecycleOwner) { drinks ->
 
-                        if (drinks.body()?.drinks?.isEmpty() == false) {
-                            Log.e("onCreateView", "onCreateView: ${drinks.body()!!.drinks.size}")
-                            adapter.setData(drinks.body()!!.drinks.map {
-                                Drink(
-                                    it.idDrink,
-                                    it.strDrink,
-                                    it.strDrinkThumb
-                                )
-                            } as ArrayList<Drink>)
-                        }
+             drinks?.let { it ->
+                 if (it.body()?.drinks?.isEmpty() == false) {
+                     Log.e("onCreateView", "onCreateView: ${it.body()!!.drinks.size}")
+                     adapter.setData(drinks.body()!!.drinks.map {
+                         Drink(
+                             it.idDrink,
+                             it.strDrink,
+                             it.strDrinkThumb
+                         )
+                     } as ArrayList<Drink>)
+                 }
+             }
                     }
                     progress.visibility = View.GONE
                 } else {

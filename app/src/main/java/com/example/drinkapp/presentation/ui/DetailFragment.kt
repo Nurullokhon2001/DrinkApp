@@ -35,6 +35,15 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         initViews(view)
+
+        vm.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                progress.visibility = View.VISIBLE
+            } else {
+                progress.visibility = View.GONE
+            }
+        }
+
         arguments?.takeIf { it.containsKey("id") }?.apply {
             vm.getDetailsDrinkById(getString("id").toString()).observe(viewLifecycleOwner) { it ->
                 it.body()?.let {
@@ -65,15 +74,6 @@ class DetailFragment : Fragment() {
                         .centerCrop()
                         .into(image)
                 }
-
-                vm.isLoading.observe(viewLifecycleOwner) {
-                    if (it) {
-                        progress.visibility = View.VISIBLE
-                    } else {
-                        progress.visibility = View.GONE
-                    }
-                }
-
             }
         }
     }
