@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.drinkapp.data.model.CategoriesDBModel
+import com.example.drinkapp.data.model.DrinkDBModel
 import com.example.drinkapp.data.model.FavoritesModel
 import com.example.drinkapp.data.model.HistoryModel
 import com.example.drinkapp.domain.model.CategoriesNameModel
@@ -42,13 +43,22 @@ interface HistoryDao {
 
     //Category
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-   suspend fun insertCategories(categories: List<CategoriesDBModel>)
+    suspend fun insertCategories(categories: List<CategoriesDBModel>)
 
     @Query("Select * from CategoryTable ")
     fun getCategories(): Flow<List<CategoriesDBModel>>
 
     @Query("Delete from CategoryTable")
     fun deleteCategories()
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertDrinks(drinks: List<DrinkDBModel>)
+
+    @Query("Select * from DrinkTable where drinkCategory = :category")
+    fun getDrinks(category: String): Flow<List<DrinkDBModel>>
+
+    @Query("Delete from DrinkTable")
+    fun deleteDrinks()
 
 
 }

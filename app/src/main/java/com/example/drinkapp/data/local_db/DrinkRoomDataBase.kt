@@ -7,9 +7,14 @@ import androidx.room.RoomDatabase
 import com.example.drinkapp.data.model.HistoryModel
 import com.example.drinkapp.data.local_db.dao.HistoryDao
 import com.example.drinkapp.data.model.CategoriesDBModel
+import com.example.drinkapp.data.model.DrinkDBModel
 import com.example.drinkapp.data.model.FavoritesModel
 
-@Database(entities = [HistoryModel::class, FavoritesModel::class,CategoriesDBModel::class], version = 3, exportSchema = false)
+@Database(
+    entities = [HistoryModel::class, FavoritesModel::class, CategoriesDBModel::class, DrinkDBModel::class],
+    version = 6,
+    exportSchema = false
+)
 abstract class DrinkRoomDataBase : RoomDatabase() {
 
     abstract fun historyDao(): HistoryDao
@@ -23,7 +28,8 @@ abstract class DrinkRoomDataBase : RoomDatabase() {
                     context.applicationContext,
                     DrinkRoomDataBase::class.java,
                     "drink_database"
-                ).build()
+                )
+                    .build()
                 Instance = instance
                 instance
             }

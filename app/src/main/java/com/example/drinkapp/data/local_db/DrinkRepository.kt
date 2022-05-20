@@ -4,6 +4,7 @@ import androidx.annotation.WorkerThread
 import com.example.drinkapp.data.model.HistoryModel
 import com.example.drinkapp.data.local_db.dao.HistoryDao
 import com.example.drinkapp.data.model.CategoriesDBModel
+import com.example.drinkapp.data.model.DrinkDBModel
 import com.example.drinkapp.data.model.FavoritesModel
 import kotlinx.coroutines.flow.Flow
 
@@ -31,6 +32,10 @@ class DrinkRepository(private val historyDao: HistoryDao) {
 
     suspend fun insertCategories(categories: List<CategoriesDBModel>) {
         historyDao.insertCategories(categories)
+    }
+
+    suspend fun insertDrinks(drinks: List<DrinkDBModel>){
+        historyDao.insertDrinks(drinks)
     }
 
 //    suspend fun

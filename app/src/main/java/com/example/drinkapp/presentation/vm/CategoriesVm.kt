@@ -20,14 +20,15 @@ class CategoriesVm : ViewModel() {
         _isLoading.postValue(isLoading)
     }
 
-    private val _drinks = MutableLiveData<Response<Drinks>>()
-    val drinks = _drinks
-    fun getDrinks(ctgrName: String) {
+
+    fun getDrinks(ctgrName: String): LiveData<Response<Drinks>> {
+        val drinks = MutableLiveData<Response<Drinks>>()
         viewModelScope.launch {
             setLoading(true)
-            _drinks.value = repo.getDrinksByCategories(ctgrName)
+            drinks.postValue(repo.getDrinksByCategories(ctgrName))
             setLoading(false)
         }
+        return drinks
     }
 
     fun getDrinksByName(name: String): LiveData<Response<DrinkDetails>> {

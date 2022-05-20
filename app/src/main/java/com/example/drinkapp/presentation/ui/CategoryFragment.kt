@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.drinkapp.App
 import com.example.drinkapp.R
 import com.example.drinkapp.data.mappers.Mappers
+import com.example.drinkapp.data.model.DrinkDBModel
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.presentation.adapter.DrinkAdapter
 import com.example.drinkapp.presentation.vm.CategoriesVm
@@ -28,6 +29,8 @@ class CategoryFragment : Fragment() {
     private lateinit var adapter: DrinkAdapter
     private lateinit var vm: CategoriesVm
     private lateinit var recyclerView: RecyclerView
+    private var categoryName = ""
+
 
     private val roomViewModel: RoomViewModel by viewModels {
         RoomViewModelFactory((activity?.application as App).repository)
@@ -45,15 +48,19 @@ class CategoryFragment : Fragment() {
         initViews(view)
 
         arguments?.takeIf { it.containsKey(ARG_OBJECT) }?.apply {
-            vm.getDrinks(getString(ARG_OBJECT).toString())
-        }
+            categoryName = getString(ARG_OBJECT).toString()
+            vm.getDrinks(categoryName).observe(viewLifecycleOwner){
+                it?.let {
+                    adapter.setData(it.body()!!.drinks as ArrayList<Drink>)
 
-
-        vm.drinks.observe(viewLifecycleOwner) {
-           it?.let {
-               Log.e("onCreateView", "onCreateView: ${it.body()!!.drinks.size}")
-               adapter.setData(it.body()!!.drinks as ArrayList<Drink>)
-           }
+                    roomViewModel.insertDrinks(
+                        Mappers.mapDrinkModelToDrinkDBModel(
+                            (it.body()!!.drinks),
+                            categoryName
+                        )
+                    )
+                }
+            }
         }
 
         vm.isLoading.observe(viewLifecycleOwner) {
