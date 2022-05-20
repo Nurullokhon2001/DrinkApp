@@ -1,5 +1,6 @@
 package com.example.drinkapp.presentation.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.drinkapp.App
 import com.example.drinkapp.R
+import com.example.drinkapp.data.mappers.Mappers
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.presentation.adapter.DrinkAdapter
 import com.example.drinkapp.presentation.vm.RoomViewModel
@@ -35,7 +37,13 @@ class FavoriteFragment : Fragment() {
 
         roomViewModel.allFavorites.observe(viewLifecycleOwner) { it ->
             it?.let { it ->
-                adapter.setData(it.map { Drink(it.idDrink,it.drinkName,it.drinkImage) } as ArrayList<Drink>)
+                adapter.setData(it.map {
+                    Drink(
+                        it.idDrink,
+                        it.drinkName,
+                        it.drinkImage
+                    )
+                } as ArrayList<Drink>)
             }
         }
 
@@ -56,8 +64,22 @@ class FavoriteFragment : Fragment() {
             }
         }
 
-        override fun longClickItem(id: Drink): Boolean {
-            TODO("Not yet implemented")
+        override fun longClickItem(model: Drink): Boolean {
+            val builder = AlertDialog.Builder(requireContext())
+            with(builder)
+            {
+                setMessage("Аre you sure you want to delete ?")
+                setPositiveButton("Cancel") { dialog, _ ->
+                    dialog.cancel()
+                }
+                setNegativeButton("Delete  favorite") { dialog, _ ->
+                    roomViewModel.deleteFavorites(model.idDrink.toInt())
+                    adapter.notifyDataSetChanged()
+                    dialog.cancel()
+                }
+                show()
+            }
+            return true
         }
 
     }

@@ -33,7 +33,7 @@ interface HistoryDao {
     suspend fun insertFavoriteDrink(favoritesModel: FavoritesModel)
 
     @Query("Delete from Favorite where idDrink = :id")
-    fun deleteFavorites(id: Int)
+    suspend  fun deleteFavorites(id: Int)
 
 //    @Query("SELECT EXISTS (SELECT 1 FROM example_table WHERE id = :id)")
 //    fun exists(id: Int): Boolean

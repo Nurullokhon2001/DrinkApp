@@ -20,6 +20,14 @@ class DrinkRepository(private val historyDao: HistoryDao) {
         historyDao.insertFavoriteDrink(historyModel)
     }
 
+    suspend fun deleteHistory(id: Int) {
+        historyDao.deleteHistory(id)
+    }
+
+    suspend fun deleteFavorite(id: Int) {
+        historyDao.deleteFavorites(id)
+    }
+
 //    suspend fun
 
 }

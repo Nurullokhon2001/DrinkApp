@@ -1,5 +1,6 @@
 package com.example.drinkapp.presentation.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -36,7 +37,13 @@ class HistoryFragment : Fragment() {
 
         roomViewModel.allHistory.observe(viewLifecycleOwner) { it ->
             it?.let { it ->
-                adapter.setData(it.map { Drink(it.idDrink,it.drinkName,it.drinkImg) } as ArrayList<Drink>)
+                adapter.setData(it.map {
+                    Drink(
+                        it.idDrink,
+                        it.drinkName,
+                        it.drinkImg
+                    )
+                } as ArrayList<Drink>)
             }
         }
 
@@ -57,8 +64,22 @@ class HistoryFragment : Fragment() {
             }
         }
 
-        override fun longClickItem(id: Drink): Boolean {
-            TODO("Not yet implemented")
+        override fun longClickItem(model: Drink): Boolean {
+            val builder = AlertDialog.Builder(requireContext())
+            with(builder)
+            {
+                setMessage("Аre you sure you want to delete ?")
+                setPositiveButton("Cancel") { dialog, _ ->
+                    dialog.cancel()
+                }
+                setNegativeButton("Delete from history") { dialog, _ ->
+                    roomViewModel.deleteHistory(model.idDrink.toInt())
+                    adapter.notifyDataSetChanged()
+                    dialog.cancel()
+                }
+                show()
+            }
+            return true
         }
 
     }

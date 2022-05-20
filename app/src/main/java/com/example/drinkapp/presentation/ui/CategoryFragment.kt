@@ -103,7 +103,6 @@ class CategoryFragment : Fragment() {
                 }
                 show()
             }
-
 //            Toast.makeText(requireContext(), "123", Toast.LENGTH_SHORT).show()
 
             return true

@@ -23,6 +23,15 @@ class RoomViewModel(private val repository: DrinkRepository) : ViewModel() {
             repository.insertFavorite(favorites)
         }
     }
+
+    fun deleteHistory(id: Int) {
+        viewModelScope.launch { repository.deleteHistory(id) }
+    }
+
+    fun deleteFavorites(id: Int) {
+        viewModelScope.launch { repository.deleteFavorite(id) }
+    }
+
 }
 
 class RoomViewModelFactory(private val repository: DrinkRepository) : ViewModelProvider.Factory {
