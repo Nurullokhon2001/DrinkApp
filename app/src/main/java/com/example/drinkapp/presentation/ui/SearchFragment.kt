@@ -47,18 +47,18 @@ class SearchFragment : Fragment() {
                 if (it.isNotEmpty()) {
                     vm.getDrinksByName(it.toString()).observe(viewLifecycleOwner) { drinks ->
 
-             drinks?.let { it ->
-                 if (it.body()?.drinks?.isEmpty() == false) {
-                     Log.e("onCreateView", "onCreateView: ${it.body()!!.drinks.size}")
-                     adapter.setData(drinks.body()!!.drinks.map {
-                         Drink(
-                             it.idDrink,
-                             it.strDrink,
-                             it.strDrinkThumb
-                         )
-                     } as ArrayList<Drink>)
-                 }
-             }
+                        drinks?.let { it ->
+                            if (it.body()?.drinks?.isEmpty() == false) {
+                                Log.e("onCreateView", "onCreateView: ${it.body()!!.drinks.size}")
+                                adapter.setData(drinks.body()!!.drinks.map {
+                                    Drink(
+                                        it.idDrink,
+                                        it.strDrink,
+                                        it.strDrinkThumb
+                                    )
+                                } as ArrayList<Drink>)
+                            }
+                        }
                     }
                     progress.visibility = View.GONE
                 } else {
@@ -93,7 +93,7 @@ class SearchFragment : Fragment() {
         }
 
         override fun longClickItem(id: Drink): Boolean {
-            TODO("Not yet implemented")
+            return true
         }
     }
 }
