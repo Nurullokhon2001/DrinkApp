@@ -26,66 +26,92 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
-        val cbOrdinary = view.findViewById<CheckBox>(R.id.cb_ordinary).setOnClickListener(this)
-        val cbCocktail = view.findViewById<CheckBox>(R.id.cb_cocktail).setOnClickListener(this)
-        val cbShake = view.findViewById<CheckBox>(R.id.cb_shake).setOnClickListener(this)
-        val cbOther = view.findViewById<CheckBox>(R.id.cb_other).setOnClickListener(this)
-        val cbCocoa = view.findViewById<CheckBox>(R.id.cb_cocoa).setOnClickListener(this)
-        val cbShot = view.findViewById<CheckBox>(R.id.cb_shot).setOnClickListener(this)
-        val cbCoffee = view.findViewById<CheckBox>(R.id.cb_coffee).setOnClickListener(this)
-        val cbHomemade = view.findViewById<CheckBox>(R.id.cb_homemade).setOnClickListener(this)
-        val cbPunch = view.findViewById<CheckBox>(R.id.cb_punch).setOnClickListener(this)
-        val cbBeer = view.findViewById<CheckBox>(R.id.cb_beer).setOnClickListener(this)
-        val cbSoft = view.findViewById<CheckBox>(R.id.cb_soft).setOnClickListener(this)
+        var cbOrdinary = view.findViewById<CheckBox>(R.id.cb_ordinary)
+        cbOrdinary.setOnClickListener(this)
+
+        var cbCocktail = view.findViewById<CheckBox>(R.id.cb_cocktail)
+        cbCocktail.setOnClickListener(this)
+
+        var cbShake = view.findViewById<CheckBox>(R.id.cb_shake)
+        cbShake.setOnClickListener(this)
+
+        var cbOther = view.findViewById<CheckBox>(R.id.cb_other)
+        cbOther.setOnClickListener(this)
+
+        var cbCocoa = view.findViewById<CheckBox>(R.id.cb_cocoa)
+        cbCocoa.setOnClickListener(this)
+
+        var cbShot = view.findViewById<CheckBox>(R.id.cb_shot)
+        cbShot.setOnClickListener(this)
+
+        var cbCoffee = view.findViewById<CheckBox>(R.id.cb_coffee)
+        cbCoffee.setOnClickListener(this)
+
+        var cbHomemade = view.findViewById<CheckBox>(R.id.cb_homemade)
+        cbHomemade.setOnClickListener(this)
+
+        var cbPunch = view.findViewById<CheckBox>(R.id.cb_punch)
+        cbPunch.setOnClickListener(this)
+
+        var cbBeer = view.findViewById<CheckBox>(R.id.cb_beer)
+        cbBeer.setOnClickListener(this)
+
+        var cbSoft = view.findViewById<CheckBox>(R.id.cb_soft)
+        cbSoft.setOnClickListener(this)
+
+        roomViewModel.getCategories.observe(viewLifecycleOwner) {
+            cbOrdinary.isChecked = true
+        }
+
         return view
     }
 
     override fun onClick(v: View) {
         when (v.id) {
             R.id.cb_ordinary -> {
-                roomViewModel.updateCategory(CategoriesDBModel(id=287 ,strCategory = "Ordinary Drink" , status = true))
+                roomViewModel.updateCategory(false, "Ordinary Drink")
                 Toast.makeText(requireContext(), "cb_ordinary", Toast.LENGTH_SHORT).show()
             }
             R.id.cb_cocktail -> {
-                roomViewModel.updateCategory(CategoriesDBModel(id=288 ,strCategory = "Сocktail" , status = true))
+                roomViewModel.updateCategory(false, "Cocktail")
                 Toast.makeText(requireContext(), "cb_cocktail", Toast.LENGTH_SHORT).show()
             }
             R.id.cb_shake -> {
-                roomViewModel.updateCategory(CategoriesDBModel(id=289 ,strCategory = "Shake" , status = true))
+                roomViewModel.updateCategory(false, "Shake")
+
                 Toast.makeText(requireContext(), "cb_shake", Toast.LENGTH_SHORT).show()
             }
             R.id.cb_other -> {
-                roomViewModel.updateCategory(CategoriesDBModel(id=290 ,strCategory = "Other/Unknown" , status = true))
+                roomViewModel.updateCategory(false, "Other/Unknown")
                 Toast.makeText(requireContext(), "cb_other", Toast.LENGTH_SHORT).show()
             }
             R.id.cb_cocoa -> {
-                roomViewModel.updateCategory(CategoriesDBModel(id=291 ,strCategory = "Cocoa" , status = true))
+                roomViewModel.updateCategory(false, "Cocoa")
                 Toast.makeText(requireContext(), "cb_cocoa", Toast.LENGTH_SHORT).show()
             }
             R.id.cb_shot -> {
-                roomViewModel.updateCategory(CategoriesDBModel(id=292 ,strCategory = "Shot" , status = true))
+                roomViewModel.updateCategory(false, "Shot")
                 Toast.makeText(requireContext(), "cb_shot", Toast.LENGTH_SHORT).show()
             }
             R.id.cb_coffee -> {
-                roomViewModel.updateCategory(CategoriesDBModel(id=293 ,strCategory = "Coffee/ Tea" , status = true))
+                roomViewModel.updateCategory(false, "Coffee / Tea")
                 Toast.makeText(requireContext(), "cb_coffee", Toast.LENGTH_SHORT).show()
             }
             R.id.cb_punch -> {
-                roomViewModel.updateCategory(CategoriesDBModel(id=295 ,strCategory = "Punch/ Party Drink" , status = true))
+                roomViewModel.updateCategory(false, "Punch / Party Drink")
                 Toast.makeText(requireContext(), "cb_punch", Toast.LENGTH_SHORT).show()
             }
             R.id.cb_beer -> {
-                roomViewModel.updateCategory(CategoriesDBModel(id=296 ,strCategory = "Beer" , status = true))
+                roomViewModel.updateCategory(false, "Beer")
 
                 Toast.makeText(requireContext(), "cb_beer", Toast.LENGTH_SHORT).show()
             }
             R.id.cb_soft -> {
-                roomViewModel.updateCategory(CategoriesDBModel(id=297 ,strCategory = "Beer" , status = true))
-
+                roomViewModel.updateCategory(false, "Soft Drink")
                 Toast.makeText(requireContext(), "cb_soft", Toast.LENGTH_SHORT).show()
             }
             R.id.cb_homemade -> {
-                roomViewModel.updateCategory(CategoriesDBModel(id=294 ,strCategory = "Homemade Liqueur" , status = true))
+                roomViewModel.updateCategory(false, "Homemade Liqueur")
                 Toast.makeText(requireContext(), "cb_homemade", Toast.LENGTH_SHORT).show()
             }
         }

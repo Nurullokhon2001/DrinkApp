@@ -36,7 +36,7 @@ class DrinkRepository(private val historyDao: HistoryDao) {
 
     fun getCategories(): Flow<List<CategoriesDBModel>> = historyDao.getCategories()
 
-    suspend fun updateCategory(status: CategoriesDBModel) = historyDao.updateCategory(status)
+    suspend fun updateCategory(status: Boolean, name: String) = historyDao.updateCategory(status,name)
 
     suspend  fun deleteCategories() {
         historyDao.deleteCategories()
@@ -51,7 +51,6 @@ class DrinkRepository(private val historyDao: HistoryDao) {
     }
 
     fun getDrinks(category: String): Flow<List<DrinkDBModel>> = historyDao.getDrinks(category)
-
 
 //    suspend fun
 

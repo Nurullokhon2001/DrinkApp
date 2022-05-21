@@ -46,8 +46,8 @@ interface HistoryDao {
     @Query("Select * from CategoryTable ")
     fun getCategories(): Flow<List<CategoriesDBModel>>
 
-    @Update
-    suspend fun updateCategory(status: CategoriesDBModel)
+    @Query("UPDATE CategoryTable SET categoryStatus = :status WHERE categoryName = :name")
+    suspend fun updateCategory(status: Boolean, name: String)
 
     @Query("Delete from CategoryTable")
     suspend fun deleteCategories()

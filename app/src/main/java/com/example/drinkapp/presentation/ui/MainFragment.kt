@@ -50,7 +50,7 @@ class MainFragment : Fragment() {
                 it?.let { it ->
                     ctgrArray = it.body()!!.categoriesNameModels
 
-                   roomViewModel.deleteCategories()
+                    roomViewModel.deleteCategories()
                     roomViewModel.deleteDrinks()
                     roomViewModel.insertCategories(ctgrArray.map {
                         CategoriesDBModel(
@@ -58,8 +58,12 @@ class MainFragment : Fragment() {
                         )
                     })
                     roomViewModel.getCategories.observe(viewLifecycleOwner) {
-                        ctgrArray = Mappers.mapCategoriesDBModelToCategoriesNameModel(it)
-                        setTabLayoutAndViewPager()
+                        val newArray = it.filter { it.status }
+                        setTabLayoutAndViewPager(
+                            Mappers.mapCategoriesDBModelToCategoriesNameModel(
+                                newArray
+                            )
+                        )
                     }
                 }
             }
@@ -67,15 +71,15 @@ class MainFragment : Fragment() {
         } else {
             Log.e("onCreateView", "internet off ")
             roomViewModel.getCategories.observe(viewLifecycleOwner) {
-                ctgrArray = Mappers.mapCategoriesDBModelToCategoriesNameModel(it)
-                setTabLayoutAndViewPager()
+                val newArray = it.filter { it.status }
+                setTabLayoutAndViewPager(Mappers.mapCategoriesDBModelToCategoriesNameModel(newArray))
             }
         }
 
         return view
     }
 
-    fun setTabLayoutAndViewPager(){
+    private fun setTabLayoutAndViewPager(ctgrArray: List<CategoriesNameModel>) {
         adapter = CategoryAdapter(requireActivity(), ctgrArray)
         viewPager.adapter = adapter
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->

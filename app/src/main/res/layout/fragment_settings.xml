@@ -77,7 +77,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Other / Unknown"
+        android:text="Other/Unknown"
         app:layout_constraintBottom_toBottomOf="@+id/cb_other"
         app:layout_constraintStart_toEndOf="@id/cb_other"
         app:layout_constraintTop_toTopOf="@id/cb_other" />
@@ -132,7 +132,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Coffee"
+        android:text="Coffee / Tea"
         app:layout_constraintBottom_toBottomOf="@+id/cb_coffee"
         app:layout_constraintStart_toEndOf="@id/cb_coffee"
         app:layout_constraintTop_toTopOf="@id/cb_coffee" />
@@ -150,7 +150,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Coffee"
+        android:text="Homemade Liqueur"
         app:layout_constraintBottom_toBottomOf="@+id/cb_homemade"
         app:layout_constraintStart_toEndOf="@id/cb_homemade"
         app:layout_constraintTop_toTopOf="@id/cb_homemade" />
