@@ -36,7 +36,7 @@ class DrinkRepository(private val historyDao: HistoryDao) {
 
     fun getCategories(): Flow<List<CategoriesDBModel>> = historyDao.getCategories()
 
-    fun deleteCategories() {
+    suspend  fun deleteCategories() {
         historyDao.deleteCategories()
     }
 
@@ -44,7 +44,7 @@ class DrinkRepository(private val historyDao: HistoryDao) {
         historyDao.insertDrinks(drinks)
     }
 
-    fun deleteDrinks() {
+   suspend fun deleteDrinks() {
         historyDao.deleteDrinks()
     }
 

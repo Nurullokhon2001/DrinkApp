@@ -49,7 +49,7 @@ interface HistoryDao {
     fun getCategories(): Flow<List<CategoriesDBModel>>
 
     @Query("Delete from CategoryTable")
-    fun deleteCategories()
+    suspend  fun deleteCategories()
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertDrinks(drinks: List<DrinkDBModel>)
@@ -58,7 +58,7 @@ interface HistoryDao {
     fun getDrinks(category: String): Flow<List<DrinkDBModel>>
 
     @Query("Delete from DrinkTable")
-    fun deleteDrinks()
+    suspend  fun deleteDrinks()
 
 
 }
