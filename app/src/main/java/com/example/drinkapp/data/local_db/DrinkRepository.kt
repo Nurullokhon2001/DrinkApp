@@ -44,7 +44,7 @@ class DrinkRepository(private val historyDao: HistoryDao) {
         historyDao.insertDrinks(drinks)
     }
 
-    suspend fun deleteDrinks() {
+   suspend fun deleteDrinks() {
         historyDao.deleteDrinks()
     }
 

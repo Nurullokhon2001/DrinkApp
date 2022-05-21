@@ -61,7 +61,8 @@ class CategoryFragment : Fragment() {
                 vm.getDrinks(categoryName).observe(viewLifecycleOwner) {
                     it?.let {
                         adapter.setData(it.body()!!.drinks as ArrayList<Drink>)
-                        roomViewModel.deleteDrinks()
+
+                // roomViewModel.deleteDrinks()
                         roomViewModel.insertDrinks(
                             Mappers.mapDrinkModelToDrinkDBModel(
                                 (it.body()!!.drinks),

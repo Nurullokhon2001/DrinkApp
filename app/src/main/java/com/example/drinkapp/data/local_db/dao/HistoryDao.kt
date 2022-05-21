@@ -58,7 +58,7 @@ interface HistoryDao {
     fun getDrinks(category: String): Flow<List<DrinkDBModel>>
 
     @Query("Delete from DrinkTable")
-    suspend   fun deleteDrinks()
+    suspend  fun deleteDrinks()
 
 
 }
