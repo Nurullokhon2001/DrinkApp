@@ -1,8 +1,10 @@
 package com.example.drinkapp.data.mappers
 
+import com.example.drinkapp.data.model.CategoriesDBModel
 import com.example.drinkapp.data.model.DrinkDBModel
 import com.example.drinkapp.data.model.FavoritesModel
 import com.example.drinkapp.data.model.HistoryModel
+import com.example.drinkapp.domain.model.CategoriesNameModel
 import com.example.drinkapp.domain.model.Drink
 import com.example.drinkapp.domain.model.DrinkDetails
 import com.example.drinkapp.domain.model.DrinkDetailsModel
@@ -36,6 +38,15 @@ class Mappers {
                 )
             }
         }
+
+        fun mapCategoriesDBModelToCategoriesNameModel(model : List<CategoriesDBModel>) : List<CategoriesNameModel>{
+            return model.map {
+                CategoriesNameModel(
+                    it.strCategory
+                )
+            }
+        }
+
     }
 
 }

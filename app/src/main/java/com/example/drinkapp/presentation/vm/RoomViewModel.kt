@@ -7,6 +7,7 @@ import com.example.drinkapp.data.model.CategoriesDBModel
 import com.example.drinkapp.data.model.DrinkDBModel
 import com.example.drinkapp.data.model.FavoritesModel
 import com.example.drinkapp.data.model.HistoryModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class RoomViewModel(private val repository: DrinkRepository) : ViewModel() {
@@ -41,10 +42,23 @@ class RoomViewModel(private val repository: DrinkRepository) : ViewModel() {
         }
     }
 
+    val getCategories: LiveData<List<CategoriesDBModel>> = repository.getCategories().asLiveData()
+
+    fun deleteCategories() {
+        repository.deleteCategories()
+    }
+
     fun insertDrinks(drinks: List<DrinkDBModel>) {
         viewModelScope.launch {
             repository.insertDrinks(drinks)
         }
+    }
+
+    fun getDrinks(category: String): LiveData<List<DrinkDBModel>> =
+        repository.getDrinks(category).asLiveData()
+
+    fun deleteDrinks() {
+        repository.deleteDrinks()
     }
 
 }
