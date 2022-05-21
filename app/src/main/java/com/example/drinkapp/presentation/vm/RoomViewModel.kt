@@ -45,7 +45,9 @@ class RoomViewModel(private val repository: DrinkRepository) : ViewModel() {
     val getCategories: LiveData<List<CategoriesDBModel>> = repository.getCategories().asLiveData()
 
     fun deleteCategories() {
-        repository.deleteCategories()
+        viewModelScope.launch {
+            repository.deleteCategories()
+        }
     }
 
     fun insertDrinks(drinks: List<DrinkDBModel>) {
@@ -58,7 +60,9 @@ class RoomViewModel(private val repository: DrinkRepository) : ViewModel() {
         repository.getDrinks(category).asLiveData()
 
     fun deleteDrinks() {
-        repository.deleteDrinks()
+       viewModelScope.launch {
+           repository.deleteDrinks()
+       }
     }
 
 }

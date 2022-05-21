@@ -57,7 +57,7 @@ class MainFragment : Fragment() {
                         tab.text = ctgrArray[position].strCategory
                     }.attach()
 
-//                    roomViewModel.deleteCategories()
+                    roomViewModel.deleteCategories()
                     roomViewModel.insertCategories(ctgrArray.map {
                         CategoriesDBModel(
                             strCategory = it.strCategory

@@ -54,13 +54,6 @@ class CategoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initViews(view)
 
-
-
-
-
-
-
-
         arguments?.takeIf { it.containsKey(ARG_OBJECT) }?.apply {
             categoryName = getString(ARG_OBJECT).toString()
 
@@ -68,8 +61,7 @@ class CategoryFragment : Fragment() {
                 vm.getDrinks(categoryName).observe(viewLifecycleOwner) {
                     it?.let {
                         adapter.setData(it.body()!!.drinks as ArrayList<Drink>)
-
-//                    roomViewModel.deleteDrinks()
+                        roomViewModel.deleteDrinks()
                         roomViewModel.insertDrinks(
                             Mappers.mapDrinkModelToDrinkDBModel(
                                 (it.body()!!.drinks),
