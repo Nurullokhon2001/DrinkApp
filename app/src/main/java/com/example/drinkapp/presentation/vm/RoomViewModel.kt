@@ -44,6 +44,12 @@ class RoomViewModel(private val repository: DrinkRepository) : ViewModel() {
 
     val getCategories: LiveData<List<CategoriesDBModel>> = repository.getCategories().asLiveData()
 
+    fun updateCategory(status: CategoriesDBModel) {
+        viewModelScope.launch {
+            repository.updateCategory(status)
+        }
+    }
+
     fun deleteCategories() {
         viewModelScope.launch {
             repository.deleteCategories()

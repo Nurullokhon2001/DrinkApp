@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -62,7 +63,7 @@ class CategoryFragment : Fragment() {
                     it?.let {
                         adapter.setData(it.body()!!.drinks as ArrayList<Drink>)
 
-                // roomViewModel.deleteDrinks()
+                        // roomViewModel.deleteDrinks()
                         roomViewModel.insertDrinks(
                             Mappers.mapDrinkModelToDrinkDBModel(
                                 (it.body()!!.drinks),
@@ -108,18 +109,23 @@ class CategoryFragment : Fragment() {
     }
 
     private val click = object : DrinkAdapter.DrinkOnclick {
+        @RequiresApi(Build.VERSION_CODES.M)
         override fun clickItem(model: Drink) {
             val ldf = DetailFragment()
             val args = Bundle()
             args.putString("id", model.idDrink)
             ldf.arguments = args
-            requireActivity().supportFragmentManager.beginTransaction().apply {
-                add(R.id.nav_host_fragment, ldf)
-                addToBackStack(null)
-                commit()
+            if (Utils.isOnline(requireContext())) {
+                requireActivity().supportFragmentManager.beginTransaction().apply {
+                    add(R.id.nav_host_fragment, ldf)
+                    addToBackStack(null)
+                    commit()
 
+                }
                 roomViewModel.insertHistory(Mappers.mapDrinkToHistoryModel(model))
-
+            }
+            else{
+                Toast.makeText(requireContext(), "Check internet connection", Toast.LENGTH_SHORT).show()
             }
         }
 

@@ -1,9 +1,6 @@
 package com.example.drinkapp.data.local_db.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.drinkapp.data.model.CategoriesDBModel
 import com.example.drinkapp.data.model.DrinkDBModel
 import com.example.drinkapp.data.model.FavoritesModel
@@ -45,12 +42,18 @@ interface HistoryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCategories(categories: List<CategoriesDBModel>)
 
+
     @Query("Select * from CategoryTable ")
     fun getCategories(): Flow<List<CategoriesDBModel>>
 
-    @Query("Delete from CategoryTable")
-    suspend  fun deleteCategories()
+    @Update
+    suspend fun updateCategory(status: CategoriesDBModel)
 
+    @Query("Delete from CategoryTable")
+    suspend fun deleteCategories()
+
+
+    //
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertDrinks(drinks: List<DrinkDBModel>)
 
@@ -58,7 +61,7 @@ interface HistoryDao {
     fun getDrinks(category: String): Flow<List<DrinkDBModel>>
 
     @Query("Delete from DrinkTable")
-    suspend  fun deleteDrinks()
+    suspend fun deleteDrinks()
 
 
 }

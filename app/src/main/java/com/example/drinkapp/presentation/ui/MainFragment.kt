@@ -1,8 +1,6 @@
 package com.example.drinkapp.presentation.ui
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
+
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -51,18 +49,18 @@ class MainFragment : Fragment() {
             vm.ctgr.observe(viewLifecycleOwner) { it ->
                 it?.let { it ->
                     ctgrArray = it.body()!!.categoriesNameModels
-                    adapter = CategoryAdapter(requireActivity(), ctgrArray)
-                    viewPager.adapter = adapter
-                    TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-                        tab.text = ctgrArray[position].strCategory
-                    }.attach()
 
                    roomViewModel.deleteCategories()
+                    roomViewModel.deleteDrinks()
                     roomViewModel.insertCategories(ctgrArray.map {
                         CategoriesDBModel(
                             strCategory = it.strCategory
                         )
                     })
+                    roomViewModel.getCategories.observe(viewLifecycleOwner) {
+                        ctgrArray = Mappers.mapCategoriesDBModelToCategoriesNameModel(it)
+                        setTabLayoutAndViewPager()
+                    }
                 }
             }
 
@@ -70,15 +68,19 @@ class MainFragment : Fragment() {
             Log.e("onCreateView", "internet off ")
             roomViewModel.getCategories.observe(viewLifecycleOwner) {
                 ctgrArray = Mappers.mapCategoriesDBModelToCategoriesNameModel(it)
-                adapter = CategoryAdapter(requireActivity(), ctgrArray)
-                viewPager.adapter = adapter
-                TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-                    tab.text = ctgrArray[position].strCategory
-                }.attach()
+                setTabLayoutAndViewPager()
             }
         }
 
         return view
+    }
+
+    fun setTabLayoutAndViewPager(){
+        adapter = CategoryAdapter(requireActivity(), ctgrArray)
+        viewPager.adapter = adapter
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = ctgrArray[position].strCategory
+        }.attach()
     }
 
     private fun initViews(view: View) {
