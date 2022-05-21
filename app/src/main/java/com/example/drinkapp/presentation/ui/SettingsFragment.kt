@@ -16,6 +16,20 @@ import com.example.drinkapp.presentation.vm.RoomViewModelFactory
 
 class SettingsFragment : Fragment(), View.OnClickListener {
 
+    private lateinit var cbOrdinary: CheckBox
+    private lateinit var cbCocktail: CheckBox
+    private lateinit var cbShake: CheckBox
+    private lateinit var cbOther: CheckBox
+    private lateinit var cbCocoa: CheckBox
+    private lateinit var cbShot: CheckBox
+    private lateinit var cbCoffee: CheckBox
+    private lateinit var cbHomemade: CheckBox
+    private lateinit var cbPunch: CheckBox
+    private lateinit var cbBeer: CheckBox
+    private lateinit var cbSoft: CheckBox
+
+    private lateinit var array: List<CategoriesDBModel>
+
     private val roomViewModel: RoomViewModel by viewModels {
         RoomViewModelFactory((activity?.application as App).repository)
     }
@@ -26,41 +40,55 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
-        var cbOrdinary = view.findViewById<CheckBox>(R.id.cb_ordinary)
+        cbOrdinary = view.findViewById(R.id.cb_ordinary)
         cbOrdinary.setOnClickListener(this)
 
-        var cbCocktail = view.findViewById<CheckBox>(R.id.cb_cocktail)
+        cbCocktail = view.findViewById(R.id.cb_cocktail)
         cbCocktail.setOnClickListener(this)
 
-        var cbShake = view.findViewById<CheckBox>(R.id.cb_shake)
+        cbShake = view.findViewById(R.id.cb_shake)
         cbShake.setOnClickListener(this)
 
-        var cbOther = view.findViewById<CheckBox>(R.id.cb_other)
+        cbOther = view.findViewById(R.id.cb_other)
         cbOther.setOnClickListener(this)
 
-        var cbCocoa = view.findViewById<CheckBox>(R.id.cb_cocoa)
+        cbCocoa = view.findViewById(R.id.cb_cocoa)
         cbCocoa.setOnClickListener(this)
 
-        var cbShot = view.findViewById<CheckBox>(R.id.cb_shot)
+        cbShot = view.findViewById(R.id.cb_shot)
         cbShot.setOnClickListener(this)
 
-        var cbCoffee = view.findViewById<CheckBox>(R.id.cb_coffee)
+        cbCoffee = view.findViewById(R.id.cb_coffee)
         cbCoffee.setOnClickListener(this)
 
-        var cbHomemade = view.findViewById<CheckBox>(R.id.cb_homemade)
+        cbHomemade = view.findViewById(R.id.cb_homemade)
         cbHomemade.setOnClickListener(this)
 
-        var cbPunch = view.findViewById<CheckBox>(R.id.cb_punch)
+        cbPunch = view.findViewById(R.id.cb_punch)
         cbPunch.setOnClickListener(this)
 
-        var cbBeer = view.findViewById<CheckBox>(R.id.cb_beer)
+        cbBeer = view.findViewById(R.id.cb_beer)
         cbBeer.setOnClickListener(this)
 
-        var cbSoft = view.findViewById<CheckBox>(R.id.cb_soft)
+        cbSoft = view.findViewById(R.id.cb_soft)
         cbSoft.setOnClickListener(this)
 
         roomViewModel.getCategories.observe(viewLifecycleOwner) {
-            cbOrdinary.isChecked = true
+            array = it
+            cbOrdinary.isChecked = it[it.indexOfFirst { it.strCategory == "Ordinary Drink" }].status
+            cbCocktail.isChecked = it[it.indexOfFirst { it.strCategory == "Cocktail" }].status
+            cbShake.isChecked = it[it.indexOfFirst { it.strCategory == "Shake" }].status
+            cbOther.isChecked = it[it.indexOfFirst { it.strCategory == "Other/Unknown" }].status
+            cbCocoa.isChecked = it[it.indexOfFirst { it.strCategory == "Cocoa" }].status
+            cbShot.isChecked = it[it.indexOfFirst { it.strCategory == "Shot" }].status
+            cbCoffee.isChecked = it[it.indexOfFirst { it.strCategory == "Coffee / Tea" }].status
+            cbHomemade.isChecked =
+                it[it.indexOfFirst { it.strCategory == "Homemade Liqueur" }].status
+            cbPunch.isChecked =
+                it[it.indexOfFirst { it.strCategory == "Punch / Party Drink" }].status
+            cbBeer.isChecked = it[it.indexOfFirst { it.strCategory == "Beer" }].status
+            cbSoft.isChecked = it[it.indexOfFirst { it.strCategory == "Soft Drink" }].status
+
         }
 
         return view
@@ -69,53 +97,50 @@ class SettingsFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.cb_ordinary -> {
-                roomViewModel.updateCategory(false, "Ordinary Drink")
-                Toast.makeText(requireContext(), "cb_ordinary", Toast.LENGTH_SHORT).show()
+                changeStatus("Ordinary Drink", cbOrdinary)
             }
             R.id.cb_cocktail -> {
-                roomViewModel.updateCategory(false, "Cocktail")
-                Toast.makeText(requireContext(), "cb_cocktail", Toast.LENGTH_SHORT).show()
+                changeStatus("Cocktail", cbCocktail)
             }
             R.id.cb_shake -> {
-                roomViewModel.updateCategory(false, "Shake")
-
-                Toast.makeText(requireContext(), "cb_shake", Toast.LENGTH_SHORT).show()
+                changeStatus("Shake", cbShake)
             }
             R.id.cb_other -> {
-                roomViewModel.updateCategory(false, "Other/Unknown")
-                Toast.makeText(requireContext(), "cb_other", Toast.LENGTH_SHORT).show()
+                changeStatus("Other/Unknown", cbOther)
             }
             R.id.cb_cocoa -> {
-                roomViewModel.updateCategory(false, "Cocoa")
-                Toast.makeText(requireContext(), "cb_cocoa", Toast.LENGTH_SHORT).show()
+                changeStatus("Cocoa", cbCocoa)
             }
             R.id.cb_shot -> {
-                roomViewModel.updateCategory(false, "Shot")
-                Toast.makeText(requireContext(), "cb_shot", Toast.LENGTH_SHORT).show()
+                changeStatus("Shot", cbShot)
             }
             R.id.cb_coffee -> {
-                roomViewModel.updateCategory(false, "Coffee / Tea")
-                Toast.makeText(requireContext(), "cb_coffee", Toast.LENGTH_SHORT).show()
+                changeStatus("Coffee / Tea", cbCoffee)
             }
             R.id.cb_punch -> {
-                roomViewModel.updateCategory(false, "Punch / Party Drink")
-                Toast.makeText(requireContext(), "cb_punch", Toast.LENGTH_SHORT).show()
+                changeStatus("Punch / Party Drink", cbPunch)
             }
             R.id.cb_beer -> {
-                roomViewModel.updateCategory(false, "Beer")
-
-                Toast.makeText(requireContext(), "cb_beer", Toast.LENGTH_SHORT).show()
+                changeStatus("Beer", cbBeer)
             }
             R.id.cb_soft -> {
-                roomViewModel.updateCategory(false, "Soft Drink")
-                Toast.makeText(requireContext(), "cb_soft", Toast.LENGTH_SHORT).show()
+                changeStatus("Soft Drink", cbSoft)
             }
             R.id.cb_homemade -> {
-                roomViewModel.updateCategory(false, "Homemade Liqueur")
-                Toast.makeText(requireContext(), "cb_homemade", Toast.LENGTH_SHORT).show()
+                changeStatus("Homemade Liqueur", cbHomemade)
             }
         }
 
+    }
+
+    private fun changeStatus(categoryName: String, checkBox: CheckBox) {
+        if (array[array.indexOfFirst { it.strCategory == categoryName }].status) {
+            roomViewModel.updateCategory(false, categoryName)
+            checkBox.isChecked = false
+        } else {
+            roomViewModel.updateCategory(true, categoryName)
+            checkBox.isChecked = true
+        }
     }
 
 }

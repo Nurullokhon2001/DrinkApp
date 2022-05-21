@@ -50,13 +50,6 @@ class MainFragment : Fragment() {
                 it?.let { it ->
                     ctgrArray = it.body()!!.categoriesNameModels
 
-                    roomViewModel.deleteCategories()
-                    roomViewModel.deleteDrinks()
-                    roomViewModel.insertCategories(ctgrArray.map {
-                        CategoriesDBModel(
-                            strCategory = it.strCategory
-                        )
-                    })
                     roomViewModel.getCategories.observe(viewLifecycleOwner) {
                         val newArray = it.filter { it.status }
                         setTabLayoutAndViewPager(
@@ -64,6 +57,16 @@ class MainFragment : Fragment() {
                                 newArray
                             )
                         )
+
+                        if(it.isNullOrEmpty()){
+                            roomViewModel.deleteCategories()
+                            roomViewModel.deleteDrinks()
+                            roomViewModel.insertCategories(ctgrArray.map {
+                                CategoriesDBModel(
+                                    strCategory = it.strCategory
+                                )
+                            })
+                        }
                     }
                 }
             }
