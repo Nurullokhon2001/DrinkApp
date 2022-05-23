@@ -1,6 +1,5 @@
 package com.example.drinkapp.data.local_db
 
-import androidx.annotation.WorkerThread
 import com.example.drinkapp.data.model.HistoryModel
 import com.example.drinkapp.data.local_db.dao.HistoryDao
 import com.example.drinkapp.data.model.CategoriesDBModel

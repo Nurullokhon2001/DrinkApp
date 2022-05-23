@@ -49,18 +49,22 @@ class SearchFragment : Fragment() {
         mSearch.addTextChangedListener { it ->
             it?.let { it ->
                 if (it.isNotEmpty()) {
-                    vm.getDrinksByName(it.toString()).observe(viewLifecycleOwner) { drinks ->
-
-                        drinks?.let { it ->
-                            if (it.body()?.drinks?.isEmpty() == false) {
-                                Log.e("onCreateView", "onCreateView: ${it.body()!!.drinks.size}")
-                                adapter.setData(drinks.body()!!.drinks.map {
-                                    Drink(
-                                        it.idDrink,
-                                        it.strDrink,
-                                        it.strDrinkThumb
+                    if (Utils.isOnline(requireContext())) {
+                        vm.getDrinksByName(it.toString()).observe(viewLifecycleOwner) { drinks ->
+                            drinks?.let { it ->
+                                if (it.body()?.drinks?.isEmpty() == false) {
+                                    Log.e(
+                                        "onCreateView",
+                                        "onCreateView: ${it.body()!!.drinks.size}"
                                     )
-                                } as ArrayList<Drink>)
+                                    adapter.setData(drinks.body()!!.drinks.map {
+                                        Drink(
+                                            it.idDrink,
+                                            it.strDrink,
+                                            it.strDrinkThumb
+                                        )
+                                    } as ArrayList<Drink>)
+                                }
                             }
                         }
                     }

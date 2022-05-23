@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ProgressBar
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,11 +27,14 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class MainFragment : Fragment() {
 
+    private lateinit var viewPager: ViewPager2
+    private lateinit var tabLayout: TabLayout
+    private lateinit var progress: ProgressBar
+
     private lateinit var vm: MainViewModel
     private lateinit var ctgrArray: List<CategoriesNameModel>
     private lateinit var adapter: CategoryAdapter
-    private lateinit var viewPager: ViewPager2
-    private lateinit var tabLayout: TabLayout
+
     private val roomViewModel by viewModels<RoomViewModel> {
         RoomViewModelFactory((activity?.application as App).repository)
     }
@@ -58,7 +62,7 @@ class MainFragment : Fragment() {
                             )
                         )
 
-                        if(it.isNullOrEmpty()){
+                        if (it.isNullOrEmpty()) {
                             roomViewModel.deleteCategories()
                             roomViewModel.deleteDrinks()
                             roomViewModel.insertCategories(ctgrArray.map {
@@ -79,6 +83,14 @@ class MainFragment : Fragment() {
             }
         }
 
+        vm.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                progress.visibility = View.VISIBLE
+            } else {
+                progress.visibility = View.GONE
+            }
+        }
+
         return view
     }
 
@@ -93,7 +105,9 @@ class MainFragment : Fragment() {
     private fun initViews(view: View) {
         viewPager = view.findViewById(R.id.viewpager)
         tabLayout = view.findViewById(R.id.tab_layout)
+        progress = view.findViewById(R.id.progress)
         vm = ViewModelProvider(this).get(MainViewModel::class.java)
+
     }
 
 

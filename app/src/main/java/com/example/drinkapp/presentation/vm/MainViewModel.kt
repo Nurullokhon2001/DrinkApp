@@ -16,8 +16,18 @@ class MainViewModel : ViewModel() {
     val ctgr: LiveData<Response<CategoriesModel>> = _ctgr
     fun getCtgr() {
         viewModelScope.launch {
+            setLoading(true)
             _ctgr.value = repo.getCategories()
+            setLoading(false)
         }
     }
+
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    var isLoading: LiveData<Boolean> = _isLoading
+
+    private fun setLoading(isLoading: Boolean) {
+        _isLoading.postValue(isLoading)
+    }
+
 
 }

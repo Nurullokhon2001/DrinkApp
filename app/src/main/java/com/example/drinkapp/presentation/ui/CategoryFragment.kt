@@ -133,7 +133,7 @@ class CategoryFragment : Fragment() {
             val builder = AlertDialog.Builder(requireContext())
             with(builder)
             {
-                setMessage("Choose which one, add to:")
+                setMessage("Want to add to favorites ?")
                 setPositiveButton("Cancel") { dialog, _ ->
                     dialog.cancel()
                 }
