@@ -1,7 +1,7 @@
 # DrinkApp
-DrinkApp
-Что использовано?
+DrinkApp - для получение информации о напитках.
 
+Что использовано?
 -Kotlin + XML
 -MVVM
 -Coroutines
